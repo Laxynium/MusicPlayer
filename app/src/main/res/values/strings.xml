@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MusicPlayer</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_musicBrowsing">Home</string>
+    <string name="title_musicManagement">Dashboard</string>
+    <string name="title_musicPlaying">Notifications</string>
 </resources>

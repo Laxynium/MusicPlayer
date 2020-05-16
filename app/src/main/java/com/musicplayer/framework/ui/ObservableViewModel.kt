@@ -1,4 +1,4 @@
-package com.musicplayer.ui
+package com.musicplayer.framework.ui
 
 import androidx.databinding.Bindable
 import androidx.databinding.Observable

@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_musicBrowsing">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_musicBrowsing"
         android:name="com.musicplayer.musicBrowsing.search.ui.SearchSongFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_musicBrowsing"
         tools:layout="@layout/fragment_search_song" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.musicplayer.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_musicManagement"
+        android:name="com.musicplayer.musicManagement.ui.MusicManagementFragment"
+        android:label="@string/title_musicManagement"
+        tools:layout="@layout/fragment_music_management" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.musicplayer.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_musicPlaying"
+        android:name="com.musicplayer.musicPlaying.ui.MusicPlayingFragment"
+        android:label="@string/title_musicPlaying"
+        tools:layout="@layout/fragment_music_playing" />
 </navigation>

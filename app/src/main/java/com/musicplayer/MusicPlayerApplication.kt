@@ -1,6 +1,9 @@
 package com.musicplayer
 
 import android.app.Application
+import com.musicplayer.musicBrowsing.MusicBrowsingModule
+import com.musicplayer.musicManagement.MusicManagementModule
+import com.musicplayer.musicPlaying.MusicPlayingModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -16,10 +19,11 @@ class MusicPlayerApplication : Application(){
             androidLogger()
             androidContext(this@MusicPlayerApplication)
             modules(
-                MusicPlayerModule.module,
-                module{
-                    single { koin }
-                }
+                module{ single { koin } },// used for dispatching queries and commands
+                MusicBrowsingModule.koinModule,
+                MusicManagementModule.koinModule,
+                MusicPlayingModule.koinModule,
+                MusicPlayerModule.module
             )
 
         }

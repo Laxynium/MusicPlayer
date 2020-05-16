@@ -1,4 +1,4 @@
-package com.musicplayer.framework
+package com.musicplayer.framework.messaging
 
 import org.koin.core.Koin
 import kotlin.reflect.full.createType

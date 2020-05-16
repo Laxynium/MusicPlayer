@@ -1,7 +1,7 @@
 package com.musicplayer.musicManagement.mainPlaylist
 
-import com.musicplayer.framework.Command
-import com.musicplayer.framework.CommandHandler
+import com.musicplayer.framework.messaging.Command
+import com.musicplayer.framework.messaging.CommandHandler
 import java.util.*
 
 data class AddSongFromYoutube(
@@ -12,7 +12,8 @@ data class AddSongFromYoutube(
     val thumbnailUrl: String
 ) : Command
 
-class AddSongFromYoutubeHandler() : CommandHandler<AddSongFromYoutube> {
+class AddSongFromYoutubeHandler :
+    CommandHandler<AddSongFromYoutube> {
     override fun handle(command: AddSongFromYoutube) {
 
     }

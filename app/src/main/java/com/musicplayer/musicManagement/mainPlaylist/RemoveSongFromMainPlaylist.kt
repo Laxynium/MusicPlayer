@@ -1,14 +1,14 @@
 package com.musicplayer.musicManagement.mainPlaylist
 
-import com.musicplayer.framework.Command
-import com.musicplayer.framework.CommandHandler
+import com.musicplayer.framework.messaging.Command
+import com.musicplayer.framework.messaging.CommandHandler
 import java.util.*
 
 data class RemoveSongFromMainPlaylist(
     val songId: UUID
 ) : Command
 
-class RemoveSongFromMainPlaylistHandler() :
+class RemoveSongFromMainPlaylistHandler :
     CommandHandler<RemoveSongFromMainPlaylist> {
     override fun handle(command: RemoveSongFromMainPlaylist) {
 

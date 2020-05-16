@@ -1,7 +1,7 @@
 package com.musicplayer.musicManagement.regularPlaylist
 
-import com.musicplayer.framework.Command
-import com.musicplayer.framework.CommandHandler
+import com.musicplayer.framework.messaging.Command
+import com.musicplayer.framework.messaging.CommandHandler
 import java.util.*
 
 data class AddSongToRegularPlaylist(
@@ -9,7 +9,7 @@ data class AddSongToRegularPlaylist(
     val songId: UUID
 ) : Command
 
-class AddSongToRegularPlaylistHandler() :
+class AddSongToRegularPlaylistHandler :
     CommandHandler<AddSongToRegularPlaylist> {
     override fun handle(command: AddSongToRegularPlaylist) {
 
