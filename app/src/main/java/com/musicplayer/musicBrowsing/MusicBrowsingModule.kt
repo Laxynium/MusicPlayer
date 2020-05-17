@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 object MusicBrowsingModule {
     val koinModule = module {
-        viewModel { SearchSongViewModel(get()) }
+        viewModel { SearchSongViewModel(get(), get()) }
         single { SearchSongQueryHandler() } bind QueryHandler::class
     }
 }

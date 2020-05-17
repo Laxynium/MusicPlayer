@@ -15,7 +15,6 @@ data class AddSongFromYoutube(
 class AddSongFromYoutubeHandler :
     CommandHandler<AddSongFromYoutube> {
     override fun handle(command: AddSongFromYoutube) {
-
     }
 }
 
