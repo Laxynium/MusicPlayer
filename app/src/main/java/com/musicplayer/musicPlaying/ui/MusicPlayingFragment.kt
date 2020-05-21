@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.musicplayer.databinding.FragmentMusicPlayingBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MusicPlayingFragment() : Fragment() {
+class MusicPlayingFragment : Fragment() {
     private val viewModel: MusicPlayingViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,6 +17,7 @@ class MusicPlayingFragment() : Fragment() {
     ): View? {
         val binding = FragmentMusicPlayingBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
+
         return binding.root
     }
 }

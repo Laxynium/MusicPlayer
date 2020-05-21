@@ -1,7 +1,7 @@
 package com.musicplayer
 
 import android.app.Application
-import androidx.room.Room
+import com.musicplayer.database.DatabaseModule
 import com.musicplayer.musicBrowsing.MusicBrowsingModule
 import com.musicplayer.musicManagement.MusicManagementModule
 import com.musicplayer.musicPlaying.MusicPlayingModule
@@ -24,16 +24,8 @@ class MusicPlayerApplication : Application(){
                 MusicBrowsingModule.koinModule,
                 MusicManagementModule.koinModule,
                 MusicPlayingModule.koinModule,
-                MusicPlayerModule.module,
-                module {
-                    single {
-                        Room.databaseBuilder(
-                        applicationContext,
-                        MusicPlayerDatabase::class.java,
-                        "musicPlayerDb").build()
-                    }
-                    single { get<MusicPlayerDatabase>().songDao() }
-                }
+                MusicPlayerModule.koinModule,
+                DatabaseModule.koinModule
             )
         }
     }

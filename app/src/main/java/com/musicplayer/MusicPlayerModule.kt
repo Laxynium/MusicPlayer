@@ -5,7 +5,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 object MusicPlayerModule {
-    val module: Module = module {
+    val koinModule: Module = module {
         single { MessageBus(get()) }
     }
 }
