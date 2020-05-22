@@ -17,6 +17,7 @@ object DatabaseModule {
                 androidContext(),
                 MusicPlayerDatabase::class.java,
                 "musicPlayerDb")
+                .allowMainThreadQueries()
                 .addCallback(object: RoomDatabase.Callback(){
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         db.execSQL("INSERT OR IGNORE INTO queue (id, current_song_index) VALUES(1,0)")

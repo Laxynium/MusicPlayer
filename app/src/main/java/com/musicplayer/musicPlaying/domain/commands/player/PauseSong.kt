@@ -5,20 +5,21 @@ import com.musicplayer.framework.messaging.Command
 import com.musicplayer.framework.messaging.CommandHandler
 import com.musicplayer.musicPlaying.domain.QueueRepository
 
-data class SeekToSecond(val second:Int) : Command
-class SeekToSecondHandler(private val queueRepository: QueueRepository, private val devicePlayer: IDevicePlayer): CommandHandler<SeekToSecond> {
-    override fun handle(command: SeekToSecond) {
+class PauseSong : Command
+class PauseSongHandler(private val queueRepository: QueueRepository, private val devicePlayer: IDevicePlayer): CommandHandler<PauseSong> {
+    override fun handle(command: PauseSong) {
         if(!devicePlayer.isReady()){
             val queue = queueRepository.get()
             when(val song = queue.currentSong()){
                 is Some -> {
                     devicePlayer.changeSong(song.t.location){
-                        devicePlayer.seekTo(command.second)
+                        devicePlayer.pause()
                     }
                 }
             }
         }else{
-            devicePlayer.seekTo(command.second)
+            devicePlayer.pause()
         }
+
     }
 }

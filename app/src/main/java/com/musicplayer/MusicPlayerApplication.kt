@@ -20,7 +20,7 @@ class MusicPlayerApplication : Application(){
             androidLogger()
             androidContext(this@MusicPlayerApplication)
             modules(
-                module{ single { koin } },// used for dispatching queries and commands
+                module{single { koin } },// used for dispatching queries and commands
                 MusicBrowsingModule.koinModule,
                 MusicManagementModule.koinModule,
                 MusicPlayingModule.koinModule,

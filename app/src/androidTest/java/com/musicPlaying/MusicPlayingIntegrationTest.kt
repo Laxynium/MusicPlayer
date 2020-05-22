@@ -4,20 +4,62 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.SetupDb
 import com.musicplayer.framework.messaging.MessageBus
+import com.musicplayer.musicPlaying.domain.commands.player.IDevicePlayer
 import com.musicplayer.musicPlaying.domain.commands.queue.*
 import com.musicplayer.musicPlaying.queries.GetSongsInQueue
 import com.musicplayer.musicPlaying.queries.SongDto
 import org.amshove.kluent.shouldContainSame
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.dsl.bind
+import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
+
+class DevicePlayerFake: IDevicePlayer{
+    override fun onSongEnded(action: () -> Unit) {
+
+    }
+
+    override fun isReady(): Boolean {
+        return true
+    }
+
+    override fun isPlaying(): Boolean {
+        return true
+    }
+
+    override fun changeSong(songLocation: String, onChanged: () -> Unit) {
+
+    }
+
+    override fun play() {
+
+    }
+
+    override fun pause() {
+
+    }
+
+    override fun seekTo(sec: Int) {
+
+    }
+}
 
 @RunWith(AndroidJUnit4::class)
 @MediumTest
 class MusicPlayingIntegrationTest : KoinTest, SetupDb,
     QueueSongsExamples {
     private val messageBus: MessageBus by inject()
+
+    @Before
+    fun mockDevicePlayer(){
+        loadKoinModules(module {
+            single(override = true) { DevicePlayerFake() } bind IDevicePlayer::class
+        })
+    }
 
     @Test
     fun verify() {
