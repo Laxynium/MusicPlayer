@@ -1,7 +1,10 @@
 package com.musicplayer.musicManagement.regularPlaylist
 
+import arrow.core.Either
+import arrow.core.Right
 import com.musicplayer.framework.messaging.Command
 import com.musicplayer.framework.messaging.CommandHandler
+import com.musicplayer.framework.messaging.Error
 import java.util.*
 
 data class RenameRegularPlaylist(
@@ -11,7 +14,7 @@ data class RenameRegularPlaylist(
 
 class RenameRegularPlaylistHandler() :
     CommandHandler<RenameRegularPlaylist> {
-    override fun handle(command: RenameRegularPlaylist) {
-
+    override suspend fun handle(command: RenameRegularPlaylist) : Either<Error, Unit> {
+        return Right(Unit)
     }
 }
