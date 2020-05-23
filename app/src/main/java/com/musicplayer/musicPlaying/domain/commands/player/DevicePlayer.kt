@@ -3,15 +3,21 @@ package com.musicplayer.musicPlaying.domain.commands.player
 import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class DevicePlayer(private val context: Context) : IDevicePlayer {
     private val mediaPlayer: MediaPlayer = MediaPlayer()
     private var isPrepared = false
     private var isPlaying = false
 
-    override fun onSongEnded(action:()->Unit){
+    override fun onSongEnded(action:suspend ()->Unit){
         mediaPlayer.setOnCompletionListener {
-            action()
+            GlobalScope.launch {
+                action()
+            }
         }
     }
 
@@ -19,16 +25,16 @@ class DevicePlayer(private val context: Context) : IDevicePlayer {
     override fun isPlaying() = isPlaying
 
 
-    override fun changeSong(songLocation:String, onChanged: ()->Unit){
-        reset()
-
-        mediaPlayer.setDataSource(context, Uri.parse(songLocation))
-        mediaPlayer.setOnPreparedListener {
-            isPrepared = true
-            onChanged()
+    override suspend fun changeSong(songLocation: String) =
+        suspendCoroutine<Unit> { cont->
+            reset()
+            mediaPlayer.setDataSource(context, Uri.parse(songLocation))
+            mediaPlayer.setOnPreparedListener {
+                isPrepared = true
+                cont.resume(Unit)
+            }
+            mediaPlayer.prepareAsync()
         }
-        mediaPlayer.prepareAsync()
-    }
 
     override fun play(){
         isPlaying = true
