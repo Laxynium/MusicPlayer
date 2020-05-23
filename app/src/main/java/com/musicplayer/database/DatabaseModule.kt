@@ -20,6 +20,7 @@ object DatabaseModule {
                 .addCallback(object: RoomDatabase.Callback(){
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         db.execSQL("INSERT OR IGNORE INTO queue (id, current_song_index) VALUES(1,0)")
+//                        db.execSQL("INSERT OR IGNORE INTO playlists (id, name, songs) VALUES(1,'playlist1', [])")
                     }
                 })
                 .build()
