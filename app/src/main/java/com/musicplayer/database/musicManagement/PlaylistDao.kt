@@ -1,12 +1,13 @@
 package com.musicplayer.database.musicManagement
 
 import androidx.room.*
+import java.util.*
 
 @Dao
 interface PlaylistDao {
     @Transaction
     @Query("SELECT * from playlists where playlistId like :id ")
-    fun get(id: Int): PlaylistEntity
+    fun get(id: UUID): PlaylistEntity
 
     @Transaction
     @Query("SELECT * FROM playlists")
