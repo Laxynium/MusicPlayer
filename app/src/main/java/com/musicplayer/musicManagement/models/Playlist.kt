@@ -1,7 +1,8 @@
 package com.musicplayer.musicManagement.models
 
 import com.musicplayer.database.musicManagement.PlaylistEntity
-import com.musicplayer.musicPlaying.domain.Song
+import com.musicplayer.database.musicManagement.PlaylistWithSongsEntity
+import com.musicplayer.musicManagement.models.Song
 import java.util.*
 
 open class Playlist {
@@ -18,6 +19,12 @@ open class Playlist {
     constructor(entity: PlaylistEntity) {
         playlistId = entity.playlistId
         name = entity.name
+    }
+
+    constructor(entity: PlaylistWithSongsEntity) {
+        playlistId = entity.playlist.playlistId
+        name = entity.playlist.name
+        songs = entity.songs.map { t -> Song(t) }
     }
 
     fun toEntity(): PlaylistEntity {

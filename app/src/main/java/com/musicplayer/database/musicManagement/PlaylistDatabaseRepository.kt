@@ -10,8 +10,16 @@ class PlaylistDatabaseRepository(private val playlistDao: PlaylistDao) :
         return Playlist(playlistDao.get(id))
     }
 
+    override fun get(): List<Playlist> {
+        return playlistDao.getWithSongs().map { t -> Playlist(t) }
+    }
+
     override fun getMain(): Playlist {
         return Playlist(playlistDao.getMain())
+    }
+
+    override fun remove(id: UUID) {
+        playlistDao.delete(get(id).toEntity())
     }
 
     override fun save(playlist: Playlist){
