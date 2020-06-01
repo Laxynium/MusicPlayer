@@ -11,7 +11,11 @@ interface PlaylistDao {
 
     @Transaction
     @Query("SELECT * FROM playlists")
-    fun get(): List<PlaylistWithSongsEntity>
+    fun get(): List<PlaylistEntity>
+
+    @Transaction
+    @Query("SELECT * FROM playlists WHERE name LIKE 'Main Playlist'")
+    fun getMain(): PlaylistEntity
 
     @Update
     fun update(playlist: PlaylistEntity)

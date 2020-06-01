@@ -16,7 +16,7 @@ data class SongEntity(
     val title: String,
     val artist: String,
     val thumbnailUrl: String,
-    val location: String
+    val location: String?
 )
 
 @Entity(primaryKeys = ["playlistId", "songId"])

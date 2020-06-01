@@ -7,4 +7,18 @@ class MusicManagementViewModel(private val messageBus: MessageBus): ObservableVi
     fun addPlaylist() {
 
     }
+
+    fun removePlaylist() {
+
+    }
+
+    fun addToPlaylist() {
+
+    }
+
+    fun addSong() {
+
+    }
+
+
 }

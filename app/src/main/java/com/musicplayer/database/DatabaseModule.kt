@@ -3,8 +3,12 @@ package com.musicplayer.database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.musicplayer.database.musicManagement.PlaylistDatabaseRepository
+import com.musicplayer.database.musicManagement.SongDatabaseRepository
 import com.musicplayer.database.musicPlaying.QueueDao
 import com.musicplayer.database.musicPlaying.RoomQueueRepository
+import com.musicplayer.musicManagement.repositories.PlaylistRepository
+import com.musicplayer.musicManagement.repositories.SongRepository
 import com.musicplayer.musicPlaying.domain.QueueRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
@@ -27,5 +31,7 @@ object DatabaseModule {
         }
         single { get<MusicPlayerDatabase>().queueDao() } bind QueueDao::class
         single { RoomQueueRepository(get()) } bind QueueRepository::class
+        single { PlaylistDatabaseRepository(get()) } bind PlaylistRepository::class
+        single { SongDatabaseRepository(get()) } bind SongRepository::class
     }
 }

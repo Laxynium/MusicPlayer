@@ -2,6 +2,7 @@ package com.musicplayer.musicManagement.mainPlaylist
 
 import com.musicplayer.framework.messaging.Command
 import com.musicplayer.framework.messaging.CommandHandler
+import com.musicplayer.musicManagement.repositories.PlaylistRepository
 import java.util.*
 
 data class AddSongFromYoutube(
@@ -12,9 +13,11 @@ data class AddSongFromYoutube(
     val thumbnailUrl: String
 ) : Command
 
-class AddSongFromYoutubeHandler :
+class AddSongFromYoutubeHandler(private val playlistRepository: PlaylistRepository) :
     CommandHandler<AddSongFromYoutube> {
     override fun handle(command: AddSongFromYoutube) {
+        TODO("save song into")
+//        playlistRepository.get(0)
     }
 }
 
