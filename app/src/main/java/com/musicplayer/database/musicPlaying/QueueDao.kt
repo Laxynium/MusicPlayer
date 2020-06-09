@@ -1,5 +1,6 @@
 package com.musicplayer.database.musicPlaying
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
@@ -8,6 +9,9 @@ interface QueueDao{
     @Transaction
     @Query("SELECT * FROM queue limit 1")
     fun get():QueueWithSongsEntity
+
+    @Query("SELECT * FROM queue limit 1")
+    fun getObservable():LiveData<QueueWithSongsEntity>
 
     @Update
     fun updateQueue(queue: QueueEntity)

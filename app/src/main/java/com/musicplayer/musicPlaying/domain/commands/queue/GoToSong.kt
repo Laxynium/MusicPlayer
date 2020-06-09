@@ -22,9 +22,6 @@ class GoToSongHandler(private val repository: QueueRepository, private val devic
         when(val song = queue.currentSong()){
             is Some -> {
                 devicePlayer.changeSong(song.t.location)
-                if(devicePlayer.isPlaying()){
-                    devicePlayer.play()
-                }
             }
         }
         return Right(Unit)
