@@ -32,7 +32,7 @@ class MusicPlayingViewModel(private val messageBus: MessageBus,private val conte
     val songProgress = MutableLiveData<Int>()
 
     @Bindable
-    val isPlaying = MutableLiveData<String>().apply {
+    val playing = MutableLiveData<String>().apply {
         value = "Play"
     }
 
@@ -63,7 +63,7 @@ class MusicPlayingViewModel(private val messageBus: MessageBus,private val conte
             viewModelScope.launch {
                 messageBus.dispatch(GetPlayingStatus()).observeForever {
                     val value = if (it.isPlaying) "Pause" else "Play"
-                    isPlaying.postValue(value)
+                    playing.postValue(value)
                 }
             }
     }
@@ -71,7 +71,7 @@ class MusicPlayingViewModel(private val messageBus: MessageBus,private val conte
         onSongsChangedHandler = `fun`
     }
     fun toggle(){
-        if(isPlaying.value != "Play"){
+        if(playing.value != "Play"){
             pause()
         }else{
             play()
