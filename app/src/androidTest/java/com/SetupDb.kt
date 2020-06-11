@@ -24,7 +24,7 @@ interface SetupDb{
                         }
                     }).build()
                 }
-                single(override = true) { get<MusicPlayerDatabase>().queueDao() }
+                single(override = true) { get<MusicPlayerDatabase>().queueWriteDao() }
             }
         ))
     }
