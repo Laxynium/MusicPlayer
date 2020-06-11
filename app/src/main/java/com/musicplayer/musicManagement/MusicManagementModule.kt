@@ -15,11 +15,11 @@ import org.koin.dsl.module
 object MusicManagementModule {
     val koinModule = module {
         viewModel { MusicManagementViewModel(get()) }
-        single { AddSongFromYoutubeHandler() } bind CommandHandler::class
-        single { RemoveSongFromMainPlaylistHandler() } bind CommandHandler::class
-        single { CreateRegularPlaylistHandler() } bind CommandHandler::class
-        single { RemoveRegularPlaylistHandler() } bind CommandHandler::class
-        single { RemoveSongFromRegularPlaylistHandler() } bind CommandHandler::class
-        single { RenameRegularPlaylistHandler() } bind CommandHandler::class
+        single { AddSongFromYoutubeHandler(get()) } bind CommandHandler::class
+        single { RemoveSongFromMainPlaylistHandler(get()) } bind CommandHandler::class
+        single { CreateRegularPlaylistHandler(get()) } bind CommandHandler::class
+        single { RemoveRegularPlaylistHandler(get()) } bind CommandHandler::class
+        single { RemoveSongFromRegularPlaylistHandler(get()) } bind CommandHandler::class
+        single { RenameRegularPlaylistHandler(get()) } bind CommandHandler::class
     }
 }

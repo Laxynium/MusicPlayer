@@ -2,6 +2,7 @@ package com.musicplayer.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.musicplayer.database.musicManagement.PlaylistDao
 import com.musicplayer.database.musicManagement.PlaylistEntity
 import com.musicplayer.database.musicManagement.PlaylistSongCrossRef
@@ -22,6 +23,7 @@ import com.musicplayer.database.musicPlaying.SongEntity as mpSongEntity
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class MusicPlayerDatabase : RoomDatabase() {
     abstract fun queueDao(): QueueDao
     abstract fun playlistDao(): PlaylistDao
