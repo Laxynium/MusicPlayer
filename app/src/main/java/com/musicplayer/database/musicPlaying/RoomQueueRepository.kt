@@ -5,7 +5,7 @@ import com.musicplayer.musicPlaying.domain.QueueRepository
 import com.musicplayer.musicPlaying.domain.Song
 import java.util.*
 
-class RoomQueueRepository(private val queueDao: QueueDao) : QueueRepository {
+class RoomQueueRepository(private val queueDao: QueueWriteDao) : QueueRepository {
     override fun get(): Queue{
         val queueWithSongsEntity = queueDao.get()
         return Queue.fromState(Queue.QueueState(queueWithSongsEntity.queue.currentSongIndex, queueWithSongsEntity.songs.sortedBy {

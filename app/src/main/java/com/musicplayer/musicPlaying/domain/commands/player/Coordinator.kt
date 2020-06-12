@@ -9,5 +9,6 @@ class Coordinator(devicePlayer: IDevicePlayer, private val messageBus: MessageBu
     }
     private suspend fun onSongEnded() {
         messageBus.dispatch(GoToNextSong())
+        messageBus.dispatch(PlaySong())
     }
 }

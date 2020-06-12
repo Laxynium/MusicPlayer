@@ -8,7 +8,7 @@ data class SongDto(val youtubeId:String, val title:String, val thumbnailUrl:Stri
 data class SearchSong(val songTitle:String): Query<Collection<SongDto>>
 
 class SearchSongQueryHandler: QueryHandler<SearchSong, Collection<SongDto>> {
-    override fun handle(query: SearchSong): Collection<SongDto> {
+    override suspend fun handle(query: SearchSong): Collection<SongDto> {
         return listOf()
     }
 }

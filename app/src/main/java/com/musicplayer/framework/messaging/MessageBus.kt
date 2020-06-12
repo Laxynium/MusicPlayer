@@ -13,7 +13,7 @@ class MessageBus(private val koin: Koin){
             commandHandlers.firstOrNull { h -> h::class.supertypes[0].arguments[0].type == command::class.createType() }
         handler?.handle(command) ?: throw IllegalArgumentException("Handler for given command $command was not found")
     }
-    fun <TQuery: Query<TResult>, TResult> dispatch(query:TQuery): TResult? {
+    suspend fun <TQuery: Query<TResult>, TResult> dispatch(query:TQuery): TResult {
         val queryHandlers = koin.getAll<QueryHandler<TQuery, TResult>>()
         val queryHandler =
             queryHandlers.firstOrNull { h -> h::class.supertypes[0].arguments[0].type == query::class.createType() }

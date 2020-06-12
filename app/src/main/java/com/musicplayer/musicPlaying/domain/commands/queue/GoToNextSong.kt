@@ -10,7 +10,7 @@ import com.musicplayer.musicPlaying.domain.QueueRepository
 import com.musicplayer.musicPlaying.domain.commands.player.IDevicePlayer
 
 class GoToNextSong : Command
-class GotToNextSongHandler(private val repository: QueueRepository, private val devicePlayer: IDevicePlayer):CommandHandler<GoToNextSong>
+class GoToNextSongHandler(private val repository: QueueRepository, private val devicePlayer: IDevicePlayer):CommandHandler<GoToNextSong>
 {
     override suspend fun handle(command: GoToNextSong): Either<Error, Unit> {
         val queue = repository.get()
@@ -22,9 +22,6 @@ class GotToNextSongHandler(private val repository: QueueRepository, private val 
         when (val song = queue.currentSong()) {
             is Some -> {
                 devicePlayer.changeSong(song.t.location)
-                if (devicePlayer.isPlaying()) {
-                    devicePlayer.play()
-                }
             }
         }
         return Right(Unit)
