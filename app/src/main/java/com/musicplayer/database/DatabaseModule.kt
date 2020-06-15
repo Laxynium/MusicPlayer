@@ -23,7 +23,7 @@ object DatabaseModule {
                 .addCallback(object: RoomDatabase.Callback(){
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         db.execSQL("INSERT OR IGNORE INTO queue (id, current_song_index) VALUES(1,0)")
-                        db.execSQL("INSERT OR IGNORE INTO playlists (playlistId, name) VALUES(1,'main')")
+                        db.execSQL("INSERT OR IGNORE INTO playlists (playlistId, name) VALUES('00000000-0000-0000-0000-000000000001','main')")
                     }
                 })
                 .build()

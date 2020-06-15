@@ -14,8 +14,6 @@ import com.musicplayer.musicPlaying.queries.GetSongsInQueue
 import com.musicplayer.musicPlaying.queries.SongDto
 import java.util.*
 
-//data class PlaylistDto(val playlistId: UUID,
-//                       val name: String)
 class GetAllPlaylists : Query<LiveData<List<Playlist>>>
 class GetAllPlaylistsHandler(private val playlistDao: PlaylistReadDao): QueryHandler<GetAllPlaylists, LiveData<List<Playlist>>> {
     override suspend fun handle(query: GetAllPlaylists) : LiveData<List<Playlist>> {

@@ -1,11 +1,12 @@
 package com.musicplayer.framework.messaging
 
-import com.musicplayer.musicManagement.models.Playlist
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.koin.core.Koin
 import kotlin.reflect.full.createType
 
 class MessageBus(private val koin: Koin){
-    suspend fun <TCommand: Command> dispatch(command:TCommand) {
+    suspend fun <TCommand: Command> dispatch(command:TCommand) = withContext(Dispatchers.IO) {
         val commandHandlers = koin.getAll<CommandHandler<TCommand>>()
         val handler =
             commandHandlers.firstOrNull { h -> h::class.supertypes[0].arguments[0].type == command::class.createType() }
