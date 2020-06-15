@@ -17,6 +17,7 @@ data class AddSongFromYoutube(
 class AddSongFromYoutubeHandler :
     CommandHandler<AddSongFromYoutube> {
     override suspend fun handle(command: AddSongFromYoutube): Either<Error, Unit> {
+
         return Either.right(Unit)
     }
 }
