@@ -9,7 +9,7 @@ import java.util.*
 data class EnqueueSong(val songId:UUID, val songLocation: String): Command
 class EnqueueSongHandler(private val repository: QueueRepository):CommandHandler<EnqueueSong>
 {
-    override fun handle(command: EnqueueSong) {
+    override suspend fun handle(command: EnqueueSong) {
         val queue = repository.get()
 
         queue.enqueue(

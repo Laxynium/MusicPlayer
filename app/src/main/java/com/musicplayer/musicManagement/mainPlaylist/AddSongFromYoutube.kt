@@ -16,7 +16,7 @@ data class AddSongFromYoutube(
 
 class AddSongFromYoutubeHandler(private val playlistRepository: PlaylistRepository) :
     CommandHandler<AddSongFromYoutube> {
-    override fun handle(command: AddSongFromYoutube) {
+    override suspend fun handle(command: AddSongFromYoutube) {
         val location = null
 //        TODO("^^^ save song into sth")
         var playlist = playlistRepository.getMain()

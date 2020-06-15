@@ -11,7 +11,7 @@ data class RemoveSongFromMainPlaylist(
 
 class RemoveSongFromMainPlaylistHandler(private val playlistRepository: PlaylistRepository) :
     CommandHandler<RemoveSongFromMainPlaylist> {
-    override fun handle(command: RemoveSongFromMainPlaylist) {
+    override suspend fun handle(command: RemoveSongFromMainPlaylist) {
         playlistRepository.save(
             playlistRepository.getMain()
                 .apply { songs.filter { song -> song.songId != command.songId } })

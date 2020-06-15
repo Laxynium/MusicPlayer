@@ -12,7 +12,7 @@ data class RemoveSongFromRegularPlaylist(
 
 class RemoveSongFromRegularPlaylistHandler(private val playlistRepository: PlaylistRepository) :
     CommandHandler<RemoveSongFromRegularPlaylist> {
-    override fun handle(command: RemoveSongFromRegularPlaylist) {
+    override suspend fun handle(command: RemoveSongFromRegularPlaylist) {
         playlistRepository.save(
             playlistRepository.get(command.playlistId)
                 .apply { songs.filter { s -> s.songId != command.songId } })

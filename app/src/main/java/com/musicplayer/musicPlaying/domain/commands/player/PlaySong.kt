@@ -5,7 +5,7 @@ import com.musicplayer.framework.messaging.CommandHandler
 
 class PlaySong : Command
 class PlaySongHandler: CommandHandler<PlaySong>{
-    override fun handle(command: PlaySong) {
+    override suspend fun handle(command: PlaySong) {
         //call play song from android
     }
 }

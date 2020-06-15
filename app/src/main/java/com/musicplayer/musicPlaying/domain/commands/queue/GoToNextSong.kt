@@ -7,7 +7,7 @@ import com.musicplayer.musicPlaying.domain.QueueRepository
 class GoToNextSong : Command
 class GotToNextSongHandler(private val repository: QueueRepository):CommandHandler<GoToNextSong>
 {
-    override fun handle(command: GoToNextSong) {
+    override suspend fun handle(command: GoToNextSong) {
         val queue = repository.get()
 
         queue.goToNext()

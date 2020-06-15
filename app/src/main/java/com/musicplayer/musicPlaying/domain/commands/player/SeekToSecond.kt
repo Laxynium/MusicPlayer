@@ -5,7 +5,7 @@ import com.musicplayer.framework.messaging.CommandHandler
 
 class SeekToSecond : Command
 class SeekToSecondHandler: CommandHandler<SeekToSecond> {
-    override fun handle(command: SeekToSecond) {
+    override suspend fun handle(command: SeekToSecond) {
         //call play song from android
     }
 }

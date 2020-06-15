@@ -1,5 +1,6 @@
 package com.musicplayer.database.musicManagement
 
+import androidx.lifecycle.LiveData
 import com.musicplayer.musicManagement.models.Playlist
 import com.musicplayer.musicManagement.repositories.PlaylistRepository
 import java.util.*
@@ -23,6 +24,7 @@ class PlaylistDatabaseRepository(private val playlistDao: PlaylistDao) :
     }
 
     override fun save(playlist: Playlist){
-        playlistDao.update(playlist.toEntity())
+        val entity = PlaylistWithSongsEntity(playlist.toEntity(), playlist.songs.map { it.toEntity() })
+        playlistDao.save(entity)
     }
 }

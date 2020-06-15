@@ -3,8 +3,7 @@ package com.musicplayer.database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.musicplayer.database.musicManagement.PlaylistDatabaseRepository
-import com.musicplayer.database.musicManagement.SongDatabaseRepository
+import com.musicplayer.database.musicManagement.*
 import com.musicplayer.database.musicPlaying.QueueDao
 import com.musicplayer.database.musicPlaying.RoomQueueRepository
 import com.musicplayer.musicManagement.repositories.PlaylistRepository
@@ -24,7 +23,7 @@ object DatabaseModule {
                 .addCallback(object: RoomDatabase.Callback(){
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         db.execSQL("INSERT OR IGNORE INTO queue (id, current_song_index) VALUES(1,0)")
-//                        db.execSQL("INSERT OR IGNORE INTO playlists (id, name, songs) VALUES(1,'playlist1', [])")
+                        db.execSQL("INSERT OR IGNORE INTO playlists (playlistId, name) VALUES(1,'main')")
                     }
                 })
                 .build()
@@ -33,5 +32,8 @@ object DatabaseModule {
         single { RoomQueueRepository(get()) } bind QueueRepository::class
         single { PlaylistDatabaseRepository(get()) } bind PlaylistRepository::class
         single { SongDatabaseRepository(get()) } bind SongRepository::class
+        single { get<MusicPlayerDatabase>().playlistReadDao()} bind PlaylistReadDao::class
+        single { get<MusicPlayerDatabase>().playlistDao()} bind PlaylistDao::class
+        single { get<MusicPlayerDatabase>().songDao()} bind SongDao::class
     }
 }

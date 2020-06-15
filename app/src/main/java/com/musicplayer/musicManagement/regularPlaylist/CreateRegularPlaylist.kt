@@ -13,7 +13,7 @@ data class CreateRegularPlaylist(
 
 class CreateRegularPlaylistHandler(private val playlistRepository: PlaylistRepository) :
     CommandHandler<CreateRegularPlaylist> {
-    override fun handle(command: CreateRegularPlaylist) {
+    override suspend fun handle(command: CreateRegularPlaylist) {
         playlistRepository.save(Playlist(command.playlistId, command.playlistName))
 
     }

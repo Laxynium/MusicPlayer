@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.SetupDb
 import com.musicplayer.framework.messaging.MessageBus
+import com.musicplayer.musicManagement.models.Playlist
 import com.musicplayer.musicManagement.regularPlaylist.CreateRegularPlaylist
 import org.junit.Test
 import org.junit.runner.RunWith

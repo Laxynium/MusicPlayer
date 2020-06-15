@@ -11,7 +11,7 @@ data class RemoveRegularPlaylist(
 
 class RemoveRegularPlaylistHandler(private val playlistRepository: PlaylistRepository) :
     CommandHandler<RemoveRegularPlaylist> {
-    override fun handle(command: RemoveRegularPlaylist) {
+    override suspend fun handle(command: RemoveRegularPlaylist) {
         playlistRepository.remove(command.playlistId)
     }
 }

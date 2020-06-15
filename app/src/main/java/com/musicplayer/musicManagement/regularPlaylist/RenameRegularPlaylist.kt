@@ -12,7 +12,7 @@ data class RenameRegularPlaylist(
 
 class RenameRegularPlaylistHandler(private val playlistRepository: PlaylistRepository) :
     CommandHandler<RenameRegularPlaylist> {
-    override fun handle(command: RenameRegularPlaylist) {
+    override suspend fun handle(command: RenameRegularPlaylist) {
         playlistRepository.save(
             playlistRepository.get(command.playlistId)
                 .apply { name = command.newName })
