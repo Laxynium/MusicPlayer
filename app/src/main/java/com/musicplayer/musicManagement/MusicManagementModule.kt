@@ -3,6 +3,9 @@ package com.musicplayer.musicManagement
 import com.musicplayer.framework.messaging.CommandHandler
 import com.musicplayer.musicManagement.mainPlaylist.AddSongFromYoutubeHandler
 import com.musicplayer.musicManagement.mainPlaylist.RemoveSongFromMainPlaylistHandler
+import com.musicplayer.musicManagement.mainPlaylist.services.ScriptIdEncoder
+import com.musicplayer.musicManagement.mainPlaylist.services.YoutubeService
+import com.musicplayer.musicManagement.mainPlaylist.services.YtMp3DownloadLinkGenerator
 import com.musicplayer.musicManagement.regularPlaylist.CreateRegularPlaylistHandler
 import com.musicplayer.musicManagement.regularPlaylist.RemoveRegularPlaylistHandler
 import com.musicplayer.musicManagement.regularPlaylist.RemoveSongFromRegularPlaylistHandler
@@ -21,5 +24,9 @@ object MusicManagementModule {
         single { RemoveRegularPlaylistHandler() } bind CommandHandler::class
         single { RemoveSongFromRegularPlaylistHandler() } bind CommandHandler::class
         single { RenameRegularPlaylistHandler() } bind CommandHandler::class
+
+        single { YoutubeService(get())}
+        single { YtMp3DownloadLinkGenerator(get()) }
+        single { ScriptIdEncoder() }
     }
 }
