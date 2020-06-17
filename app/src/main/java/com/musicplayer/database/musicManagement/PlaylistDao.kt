@@ -23,33 +23,38 @@ interface PlaylistDao {
     fun get(): List<PlaylistEntity>
 
     @Transaction
-    @Query("SELECT * FROM playlists WHERE name LIKE 'Main Playlist'")
-    fun getMain(): PlaylistEntity
+    @Query("SELECT * FROM playlists WHERE playlistId LIKE '00000000-0000-0000-0000-000000000001'")
+    fun getMain(): PlaylistWithSongsEntity
 
     @Transaction
     fun save(playlist: PlaylistWithSongsEntity){
         update(playlist.playlist)
+//        playlist.songs.forEach {
+//            deleteSong(it)
+//        }
         playlist.songs.forEach {
-            deleteSongFromPlaylist(it)
-        }
-        playlist.songs.forEach {
-            insertSongIntoPlaylist(it)
+            insertSong(it)
+            insert(PlaylistSongCrossRef(playlist.playlist.playlistId, it.songId))
         }
     }
+
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(crossRef: PlaylistSongCrossRef)
 
     @Update
     fun update(playlist: PlaylistEntity)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(playlist: PlaylistEntity)
 
     @Delete
     fun delete(playlist: PlaylistEntity)
 
     @Delete
-    fun deleteSongFromPlaylist(song: SongEntity)
+    fun deleteSong(song: SongEntity)
 
-    @Insert
-    fun insertSongIntoPlaylist(song: SongEntity)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertSong(song: SongEntity)
 
 }

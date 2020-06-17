@@ -30,7 +30,7 @@ object DatabaseModule {
         }
         single { get<MusicPlayerDatabase>().queueDao() } bind QueueDao::class
         single { RoomQueueRepository(get()) } bind QueueRepository::class
-        single { PlaylistDatabaseRepository(get()) } bind PlaylistRepository::class
+        single { PlaylistDatabaseRepository(get(), get()) } bind PlaylistRepository::class
         single { SongDatabaseRepository(get()) } bind SongRepository::class
         single { get<MusicPlayerDatabase>().playlistReadDao()} bind PlaylistReadDao::class
         single { get<MusicPlayerDatabase>().playlistDao()} bind PlaylistDao::class

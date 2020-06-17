@@ -5,7 +5,7 @@ import com.musicplayer.musicManagement.models.Playlist
 import com.musicplayer.musicManagement.repositories.PlaylistRepository
 import java.util.*
 
-class PlaylistDatabaseRepository(private val playlistDao: PlaylistDao) :
+class PlaylistDatabaseRepository(private val playlistDao: PlaylistDao, private val songDao: SongDao) :
     PlaylistRepository {
     override fun get(id: UUID): Playlist {
         return Playlist(playlistDao.get(id))
@@ -26,6 +26,7 @@ class PlaylistDatabaseRepository(private val playlistDao: PlaylistDao) :
     override fun save(playlist: Playlist){
         val entity = PlaylistWithSongsEntity(playlist.toEntity(), playlist.songs.map { it.toEntity() })
         playlistDao.save(entity)
+
     }
 
     override fun insert(playlist: Playlist) {

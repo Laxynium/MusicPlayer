@@ -21,7 +21,7 @@ class AddSongFromYoutubeHandler(private val playlistRepository: PlaylistReposito
 //        TODO("^^^ save song into sth")
         var playlist = playlistRepository.getMain()
         var song = Song(command.songId, command.ytId, command.title, command.artist, command.thumbnailUrl, location)
-        playlist.songs.plus(song)
+        playlist.songs = playlist.songs.plus(song)
         playlistRepository.save(playlist)
 
     }

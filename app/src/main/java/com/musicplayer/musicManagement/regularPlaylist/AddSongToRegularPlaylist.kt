@@ -6,7 +6,7 @@ import com.musicplayer.musicManagement.repositories.PlaylistRepository
 import com.musicplayer.musicManagement.repositories.SongRepository
 import java.util.*
 
-data class AddSongToRegularPlaylist(
+class AddSongToRegularPlaylist(
     val playlistId: UUID,
     val songId: UUID
 ) : Command
