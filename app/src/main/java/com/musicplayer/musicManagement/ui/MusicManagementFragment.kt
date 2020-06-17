@@ -51,4 +51,8 @@ class MusicManagementFragment : Fragment() {
         parentFragmentManager.beginTransaction().replace(id, detailsFragment).commit()
         detailsFragment.setupViewModel(playlist)
     }
+
+    fun moveToAddPlaylist() {
+        parentFragmentManager.beginTransaction().replace(id, AddPlaylistFragment()).commit()
+    }
 }

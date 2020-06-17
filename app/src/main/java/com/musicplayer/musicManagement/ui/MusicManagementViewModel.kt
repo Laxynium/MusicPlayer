@@ -1,6 +1,7 @@
 package com.musicplayer.musicManagement.ui
 
 import android.app.Activity
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.LiveData
@@ -41,6 +42,10 @@ class MusicManagementViewModel(private val messageBus: MessageBus): ObservableVi
 
     fun goTo(playlist: Playlist) {
         parentFragment.moveToDetails(playlist)
+    }
+
+    fun goToAddPlaylist(view: View) {
+        parentFragment.moveToAddPlaylist()
     }
 
     fun addPlaylistButtonClick() {

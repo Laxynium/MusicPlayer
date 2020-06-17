@@ -47,5 +47,9 @@ class PlaylistDetailsViewModel(private val messageBus: MessageBus): ObservableVi
 // should handle playing song, maybe display modal so that you can add song to playlist or play it
     }
 
+    fun goBack() {
+        parentFragment.moveBack()
+    }
+
 
 }
