@@ -27,4 +27,8 @@ class PlaylistDatabaseRepository(private val playlistDao: PlaylistDao) :
         val entity = PlaylistWithSongsEntity(playlist.toEntity(), playlist.songs.map { it.toEntity() })
         playlistDao.save(entity)
     }
+
+    override fun insert(playlist: Playlist) {
+        playlistDao.insert(playlist.toEntity())
+    }
 }

@@ -1,4 +1,4 @@
-package com.musicplayer.musicManagement.ui
+package com.musicplayer.musicManagement.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.musicplayer.R
 import com.musicplayer.databinding.PlaylistBinding
 import com.musicplayer.framework.ui.DataBoundListAdapter
 import com.musicplayer.musicManagement.models.Playlist
-import kotlinx.android.synthetic.main.fragment_music_management.view.*
+import com.musicplayer.musicManagement.ui.MusicManagementViewModel
 
 class PlaylistAdapter (
     private val viewModel: MusicManagementViewModel

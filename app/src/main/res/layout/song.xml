@@ -2,11 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
-            name="playlist"
-            type="com.musicplayer.musicManagement.models.Playlist" />
+            name="song"
+            type="com.musicplayer.musicManagement.models.Song" />
         <variable
             name="viewModel"
-            type="com.musicplayer.musicManagement.ui.MusicManagementViewModel" />
+            type="com.musicplayer.musicManagement.ui.PlaylistDetailsViewModel" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@{playlist.name}"
-            android:onClick="@{()->viewModel.goTo(playlist)}" />
+            android:text="@{song.getLabel()}" />
+<!--            android:onClick="@{()->viewModel.goTo(song)}" />-->
 
     </LinearLayout>
 </layout>

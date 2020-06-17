@@ -2,6 +2,7 @@
     <string name="app_name">MusicPlayer</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_musicBrowsing">Home</string>
-    <string name="title_musicManagement">Dashboard</string>
+    <string name="title_musicManagement">Playlists</string>
+    <string name="title_playlistDetails">Playlist Details</string>
     <string name="title_musicPlaying">Notifications</string>
 </resources>

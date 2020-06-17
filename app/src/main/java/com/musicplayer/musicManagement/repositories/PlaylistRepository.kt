@@ -8,6 +8,7 @@ interface PlaylistRepository {
     fun get(id: UUID) : Playlist
     fun getMain(): Playlist
     fun get(): List<Playlist>
+    fun insert(playlist: Playlist)
     fun save(playlist: Playlist)
     fun remove(id: UUID)
 }
