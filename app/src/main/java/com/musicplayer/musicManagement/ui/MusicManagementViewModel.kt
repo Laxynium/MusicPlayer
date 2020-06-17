@@ -20,8 +20,7 @@ import java.util.*
 class MusicManagementViewModel(private val messageBus: MessageBus): ObservableViewModel() {
     private lateinit var playlists: LiveData<List<Playlist>>
     private lateinit var onPlaylistsChangedHandler: (List<Playlist>)->Unit
-    private lateinit var songs: LiveData<List<Song>>
-    private lateinit var onSongsChangedHandler: (List<Song>)->Unit=
+    private lateinit var parentFragment: MusicManagementFragment
 
     init {
         viewModelScope.launch {
@@ -32,14 +31,16 @@ class MusicManagementViewModel(private val messageBus: MessageBus): ObservableVi
         }
     }
 
+    fun setParent(parent: MusicManagementFragment){
+        this.parentFragment = parent
+    }
+
     fun onPlaylistsChange(`fun`:(List<Playlist>)->Unit){
         onPlaylistsChangedHandler = `fun`
     }
 
     fun goTo(playlist: Playlist) {
-//        var ft = mainActivity.supportFragmentManager.beginTransaction()
-//        ft.replace(R.id.navigation_musicManagement, PlaylistDetailsFragment())
-//        ft.commit()
+        parentFragment.moveToDetails(playlist)
     }
 
     fun addPlaylistButtonClick() {

@@ -9,19 +9,27 @@ import com.musicplayer.musicManagement.models.Song
 import com.musicplayer.musicManagement.regularPlaylist.GetAllPlaylists
 import com.musicplayer.musicManagement.regularPlaylist.GetAllSongsFromPlaylist
 import kotlinx.coroutines.launch
+import java.util.*
 
 class PlaylistDetailsViewModel(private val messageBus: MessageBus): ObservableViewModel() {
-    private lateinit var playlist: Playlist
+    private var playlist = Playlist(UUID.randomUUID(), "test")
     private lateinit var songs: LiveData<List<Song>>
     private lateinit var onSongsChangedHandler: (List<Song>)->Unit
+    private lateinit var parentFragment: PlaylistDetailsFragment
 
-    init {
+    fun setParent(parent: PlaylistDetailsFragment) {
+        this.parentFragment = parent
+    }
+
+    fun setup(playlist: Playlist) {
+        this.playlist = playlist
         viewModelScope.launch {
             songs = messageBus.dispatch(GetAllSongsFromPlaylist(playlist.playlistId))
             songs.observeForever {
                 onSongsChangedHandler.invoke(it)
             }
         }
+
     }
 
     fun onSongsChanged(`fun`:(List<Song>)->Unit){

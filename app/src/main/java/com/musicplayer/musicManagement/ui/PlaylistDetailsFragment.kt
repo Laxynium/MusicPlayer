@@ -34,6 +34,8 @@ class PlaylistDetailsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.setParent(this)
+
         adapter = SongsAdapter(
             viewModel
         )
@@ -46,5 +48,9 @@ class PlaylistDetailsFragment : Fragment() {
         viewModel.onSongsChanged{
             adapter.submitList(it)
         }
+    }
+
+    fun setupViewModel(playlist: Playlist) {
+        viewModel.setup(playlist)
     }
 }

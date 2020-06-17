@@ -4,13 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
+            name="playlist"
+            type="com.musicplayer.musicManagement.models.Playlist" />
+        <variable
             name="viewModel"
             type="com.musicplayer.musicManagement.ui.PlaylistDetailsViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".musicManagement.ui.MusicManagementFragment">
+        tools:context=".musicManagement.ui.PlaylistDetailsViewModel">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/songs_recyclerview"
@@ -22,6 +25,25 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="8dp"
             tools:listitem="@layout/song" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="35dp"
+            android:text="@{playlist.name}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="35dp"
+        android:text="cze"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

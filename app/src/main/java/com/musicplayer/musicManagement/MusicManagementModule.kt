@@ -6,6 +6,7 @@ import com.musicplayer.musicManagement.mainPlaylist.AddSongFromYoutubeHandler
 import com.musicplayer.musicManagement.mainPlaylist.RemoveSongFromMainPlaylistHandler
 import com.musicplayer.musicManagement.regularPlaylist.*
 import com.musicplayer.musicManagement.ui.MusicManagementViewModel
+import com.musicplayer.musicManagement.ui.PlaylistDetailsViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -13,6 +14,7 @@ import org.koin.dsl.module
 object MusicManagementModule {
     val koinModule = module {
         viewModel { MusicManagementViewModel(get()) }
+        viewModel { PlaylistDetailsViewModel(get()) }
         single { AddSongFromYoutubeHandler(get()) } bind CommandHandler::class
         single { AddSongToRegularPlaylistHandler(get(),get()) } bind CommandHandler::class
         single { RemoveSongFromMainPlaylistHandler(get()) } bind CommandHandler::class

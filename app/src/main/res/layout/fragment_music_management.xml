@@ -52,10 +52,10 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             tools:layout_editor_absoluteX="8dp"
             tools:listitem="@layout/playlist" />
 
-        <FrameLayout android:name="fragments.YourInitialFragment"
-            android:id="@+id/fragment_container"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dip" />
+<!--        <FrameLayout android:name="fragments.YourInitialFragment"-->
+<!--            android:id="@+id/fragment_container"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dip" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
