@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="searchSong"
+            type="com.musicplayer.musicBrowsing.domain.SongRecord" />
+        <variable
+            name="viewModel"
+            type="com.musicplayer.musicBrowsing.search.ui.SearchSongViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{searchSong.title}"/>
+
+    </LinearLayout>
+</layout>
