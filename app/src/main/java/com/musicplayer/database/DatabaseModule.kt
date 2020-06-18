@@ -4,7 +4,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.musicplayer.database.musicManagement.*
-import com.musicplayer.database.musicPlaying.QueueDao
 import com.musicplayer.database.musicPlaying.QueueReadDao
 import com.musicplayer.database.musicPlaying.QueueWriteDao
 import com.musicplayer.database.musicPlaying.RoomQueueRepository
