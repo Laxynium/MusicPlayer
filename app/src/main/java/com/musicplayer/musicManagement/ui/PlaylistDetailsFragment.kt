@@ -7,52 +7,55 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.musicplayer.databinding.FragmentMusicManagementBinding
+import com.musicplayer.databinding.FragmentMusicPlayingBindingImpl
+import com.musicplayer.databinding.FragmentPlaylistDetailsBinding
 import com.musicplayer.musicManagement.models.Playlist
 import com.musicplayer.musicManagement.ui.adapters.PlaylistAdapter
+import com.musicplayer.musicManagement.ui.adapters.SongsAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
+class PlaylistDetailsFragment : Fragment() {
+    private val viewModel: PlaylistDetailsViewModel by viewModel()
+    private lateinit var binding: FragmentPlaylistDetailsBinding
+    private lateinit var adapter: SongsAdapter
 
-class MusicManagementFragment : Fragment() {
-    private val viewModel: MusicManagementViewModel by viewModel()
-    private lateinit var binding: FragmentMusicManagementBinding
-    private lateinit var adapter: PlaylistAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMusicManagementBinding.inflate(inflater, container, false)
+        binding = FragmentPlaylistDetailsBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         return binding.root
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.setParent(this)
 
-        adapter = PlaylistAdapter(
+        adapter = SongsAdapter(
             viewModel
         )
 
-        binding.playlistsRecycleview.adapter = adapter
+        binding.songsRecyclerview.adapter = adapter
 
-        binding.playlistsRecycleview.apply {
+        binding.songsRecyclerview.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-        viewModel.onPlaylistsChange{
+        viewModel.onSongsChanged{
             adapter.submitList(it)
         }
     }
 
-    fun moveToDetails(playlist: Playlist) {
-        var detailsFragment = PlaylistDetailsFragment()
-        parentFragmentManager.beginTransaction().replace(id, detailsFragment).commit()
-        detailsFragment.setupViewModel(playlist)
+    fun setupViewModel(playlist: Playlist) {
+        viewModel.setup(playlist)
     }
 
-    fun moveToAddPlaylist() {
-        parentFragmentManager.beginTransaction().replace(id, AddPlaylistFragment()).commit()
+    fun moveBack() {
+        var fragment = MusicManagementFragment()
+        parentFragmentManager.beginTransaction().replace(id, fragment).commit()
     }
 }

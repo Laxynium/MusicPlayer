@@ -1,10 +1,14 @@
 package com.musicplayer.musicManagement.mainPlaylist
 
 import arrow.core.Either
+import arrow.core.Right
 import com.musicplayer.framework.messaging.Command
 import com.musicplayer.framework.messaging.CommandHandler
 import com.musicplayer.framework.messaging.Error
+import com.musicplayer.musicManagement.models.Song
+import com.musicplayer.musicManagement.repositories.PlaylistRepository
 import java.util.*
+
 
 data class AddSongFromYoutube(
     val songId: UUID,
@@ -14,11 +18,18 @@ data class AddSongFromYoutube(
     val thumbnailUrl: String
 ) : Command
 
-class AddSongFromYoutubeHandler :
+class AddSongFromYoutubeHandler(private val playlistRepository: PlaylistRepository) :
     CommandHandler<AddSongFromYoutube> {
-    override suspend fun handle(command: AddSongFromYoutube): Either<Error, Unit> {
+    override suspend fun handle(command: AddSongFromYoutube): Either<Error,Unit> {
+        val location = null
+//        TODO("^^^ save song into sth")
+        var playlist = playlistRepository.getMain()
+        var song = Song(command.songId, command.ytId, command.title, command.artist, command.thumbnailUrl, location)
+        playlist.songs = playlist.songs.plus(song)
+        playlistRepository.save(playlist)
 
-        return Either.right(Unit)
+        return Right(Unit)
+
     }
 }
 
