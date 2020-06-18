@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="song"
@@ -16,11 +17,21 @@
 
         <TextView
             android:id="@+id/textView3"
+            android:layout_width="335dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="@{()->viewModel.goTo(song)}"
+            android:text="@{song.getLabel()}" />
+
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@{song.getLabel()}"
-            android:onClick="@{()->viewModel.goTo(song)}" />
+            android:onClick="@{()->viewModel.remove(song)}"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+        <!--            android:onLongClick="@{()->viewModel.goTo(song)}" />-->
 
     </LinearLayout>
 </layout>

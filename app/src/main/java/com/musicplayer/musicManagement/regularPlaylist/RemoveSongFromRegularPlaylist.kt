@@ -1,5 +1,6 @@
 package com.musicplayer.musicManagement.regularPlaylist
 
+import com.musicplayer.database.musicManagement.PlaylistDao
 import com.musicplayer.framework.messaging.Command
 import com.musicplayer.framework.messaging.CommandHandler
 import com.musicplayer.musicManagement.repositories.PlaylistRepository
@@ -10,11 +11,9 @@ data class RemoveSongFromRegularPlaylist(
     val songId: UUID
 ) : Command
 
-class RemoveSongFromRegularPlaylistHandler(private val playlistRepository: PlaylistRepository) :
+class RemoveSongFromRegularPlaylistHandler(private val playlistDao: PlaylistDao) :
     CommandHandler<RemoveSongFromRegularPlaylist> {
     override suspend fun handle(command: RemoveSongFromRegularPlaylist) {
-        playlistRepository.save(
-            playlistRepository.get(command.playlistId)
-                .apply { songs.filter { s -> s.songId != command.songId } })
+        playlistDao.removeRef(command.playlistId, command.songId)
     }
 }

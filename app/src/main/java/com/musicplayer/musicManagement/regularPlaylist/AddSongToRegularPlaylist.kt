@@ -1,5 +1,6 @@
 package com.musicplayer.musicManagement.regularPlaylist
 
+import com.musicplayer.database.musicManagement.PlaylistDao
 import com.musicplayer.framework.messaging.Command
 import com.musicplayer.framework.messaging.CommandHandler
 import com.musicplayer.musicManagement.repositories.PlaylistRepository
@@ -11,12 +12,9 @@ class AddSongToRegularPlaylist(
     val songId: UUID
 ) : Command
 
-class AddSongToRegularPlaylistHandler(private val playlistRepository: PlaylistRepository, private val songRepository: SongRepository) :
+class AddSongToRegularPlaylistHandler(private val playlistDao: PlaylistDao) :
     CommandHandler<AddSongToRegularPlaylist> {
     override suspend fun handle(command: AddSongToRegularPlaylist) {
-        playlistRepository.save(
-            playlistRepository.get(command.playlistId)
-                .apply { songs.plus(songRepository.get(command.songId)) })
-
+        playlistDao.addRef(command.playlistId, command.songId)
     }
 }

@@ -6,11 +6,13 @@ import com.musicplayer.framework.messaging.MessageBus
 import com.musicplayer.framework.ui.ObservableViewModel
 import com.musicplayer.musicManagement.mainPlaylist.AddSongFromYoutube
 import com.musicplayer.musicManagement.mainPlaylist.AddSongFromYoutubeHandler
+import com.musicplayer.musicManagement.mainPlaylist.RemoveSongFromMainPlaylist
 import com.musicplayer.musicManagement.models.Playlist
 import com.musicplayer.musicManagement.models.Song
 import com.musicplayer.musicManagement.regularPlaylist.AddSongToRegularPlaylist
 import com.musicplayer.musicManagement.regularPlaylist.GetAllPlaylists
 import com.musicplayer.musicManagement.regularPlaylist.GetAllSongsFromPlaylist
+import com.musicplayer.musicManagement.regularPlaylist.RemoveSongFromRegularPlaylist
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -33,9 +35,9 @@ class PlaylistDetailsViewModel(private val messageBus: MessageBus): ObservableVi
             }
         }
 
-        viewModelScope.launch {
-            messageBus.dispatch(AddSongFromYoutube(UUID.randomUUID(), "jakis id", "my song", "Eminem", "https://costam.com"))
-        }
+//        viewModelScope.launch {
+//            messageBus.dispatch(AddSongToRegularPlaylist(playlist.playlistId, UUID.fromString("00000000-0000-0000-0000-000000000003")))
+//        }
 
     }
 
@@ -45,6 +47,16 @@ class PlaylistDetailsViewModel(private val messageBus: MessageBus): ObservableVi
 
     fun goTo(song: Song) {
 // should handle playing song, maybe display modal so that you can add song to playlist or play it
+    }
+
+    fun remove(song: Song) {
+        viewModelScope.launch {
+            if(playlist.playlistId.equals(UUID.fromString("00000000-0000-0000-0000-000000000001"))) {
+                messageBus.dispatch(RemoveSongFromMainPlaylist(song.songId))
+            } else {
+                messageBus.dispatch(RemoveSongFromRegularPlaylist(playlist.playlistId, song.songId))
+            }
+        }
     }
 
     fun goBack() {

@@ -38,6 +38,13 @@ interface PlaylistDao {
         }
     }
 
+    @Transaction
+    @Query("DELETE FROM PlaylistSongCrossRef WHERE playlistId = :playlistId AND songId = :songId")
+    fun removeRef(playlistId: UUID, songId: UUID)
+
+    @Transaction
+    @Query("INSERT INTO PlaylistSongCrossRef (playlistId, songId) Values (:playlistId, :songId)")
+    fun addRef(playlistId: UUID, songId: UUID)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(crossRef: PlaylistSongCrossRef)

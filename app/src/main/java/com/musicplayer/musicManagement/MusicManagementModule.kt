@@ -18,8 +18,8 @@ object MusicManagementModule {
         viewModel { PlaylistDetailsViewModel(get()) }
         viewModel { AddPlaylistViewModel(get()) }
         single { AddSongFromYoutubeHandler(get()) } bind CommandHandler::class
-        single { AddSongToRegularPlaylistHandler(get(),get()) } bind CommandHandler::class
-        single { RemoveSongFromMainPlaylistHandler(get()) } bind CommandHandler::class
+        single { AddSongToRegularPlaylistHandler(get()) } bind CommandHandler::class
+        single { RemoveSongFromMainPlaylistHandler(get(), get()) } bind CommandHandler::class
         single { CreateRegularPlaylistHandler(get()) } bind CommandHandler::class
         single { RemoveRegularPlaylistHandler(get()) } bind CommandHandler::class
         single { RemoveSongFromRegularPlaylistHandler(get()) } bind CommandHandler::class

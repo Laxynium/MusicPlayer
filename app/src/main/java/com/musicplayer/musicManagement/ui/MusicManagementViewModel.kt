@@ -48,6 +48,12 @@ class MusicManagementViewModel(private val messageBus: MessageBus): ObservableVi
         parentFragment.moveToAddPlaylist()
     }
 
+    fun remove(playlist: Playlist) {
+        viewModelScope.launch {
+            messageBus.dispatch(RemoveRegularPlaylist(playlist.playlistId))
+        }
+    }
+
     fun addPlaylistButtonClick() {
 
     }
