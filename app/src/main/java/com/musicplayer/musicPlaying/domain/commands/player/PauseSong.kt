@@ -8,19 +8,19 @@ import com.musicplayer.framework.messaging.CommandHandler
 import com.musicplayer.framework.messaging.Error
 import com.musicplayer.musicPlaying.domain.QueueRepository
 
-data class SeekToSecond(val progressInPercentage:Int) : Command
-class SeekToSecondHandler(private val queueRepository: QueueRepository, private val devicePlayer: IDevicePlayer): CommandHandler<SeekToSecond> {
-    override suspend fun handle(command: SeekToSecond): Either<Error, Unit> {
+class PauseSong : Command
+class PauseSongHandler(private val queueRepository: QueueRepository, private val devicePlayer: IDevicePlayer): CommandHandler<PauseSong> {
+    override suspend fun handle(command: PauseSong):Either<Error,Unit> {
         if(!devicePlayer.isReady()){
             val queue = queueRepository.get()
             when(val song = queue.currentSong()){
                 is Some -> {
                     devicePlayer.changeSong(song.t.location)
-                    devicePlayer.seekTo(command.progressInPercentage)
+                    devicePlayer.pause()
                 }
             }
         }else{
-            devicePlayer.seekTo(command.progressInPercentage)
+            devicePlayer.pause()
         }
         return Right(Unit)
     }

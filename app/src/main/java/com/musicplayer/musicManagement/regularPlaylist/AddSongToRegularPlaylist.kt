@@ -14,7 +14,8 @@ class AddSongToRegularPlaylist(
 
 class AddSongToRegularPlaylistHandler(private val playlistDao: PlaylistDao) :
     CommandHandler<AddSongToRegularPlaylist> {
-    override suspend fun handle(command: AddSongToRegularPlaylist) {
+    override suspend fun handle(command: AddSongToRegularPlaylist): Either<Error, Right> {
         playlistDao.addRef(command.playlistId, command.songId)
+        return Right(Unit)
     }
 }

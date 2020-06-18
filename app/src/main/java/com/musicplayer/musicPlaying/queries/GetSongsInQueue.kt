@@ -1,19 +1,23 @@
 package com.musicplayer.musicPlaying.queries
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import com.musicplayer.database.musicPlaying.QueueReadDao
 import com.musicplayer.framework.messaging.Query
 import com.musicplayer.framework.messaging.QueryHandler
-import com.musicplayer.musicPlaying.domain.QueueRepository
 import java.util.*
 
-data class SongDto(val songId:UUID, val songLocation:String, val isCurrent:Boolean)
-class GetSongsInQueue : Query<Collection<SongDto>>
-class GetSongsInQueueHandler(private val queueRepository: QueueRepository): QueryHandler<GetSongsInQueue, Collection<SongDto>> {
-    override suspend fun handle(query: GetSongsInQueue): Collection<SongDto> {
-        val state = queueRepository.get().getState()
-        return state.songs.mapIndexed { index, song ->  SongDto(
-            song.id,
-            song.location,
-            index == state.currentSongIndex
-        )}
+data class SongDto(val songId:UUID, val songLocation:String, val position: Int,val isCurrent:Boolean)
+class GetSongsInQueue : Query<LiveData<List<SongDto>>>
+class GetSongsInQueueHandler(private val dao: QueueReadDao): QueryHandler<GetSongsInQueue, LiveData<List<SongDto>>> {
+    override suspend fun handle(query: GetSongsInQueue): LiveData<List<SongDto>> {
+        val songs = dao.getObservable()
+        return Transformations.map(songs) {
+            it.songs
+                .sortedBy { s -> s.position }
+                .mapIndexed { i, s ->
+                    SongDto(UUID.fromString(s.id), s.location, i,it.queue.currentSongIndex == i)
+                }
+        }
     }
 }

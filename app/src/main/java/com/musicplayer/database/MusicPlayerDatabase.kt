@@ -5,9 +5,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.musicplayer.database.musicManagement.*
 import com.musicplayer.database.musicManagement.SongEntity as mmSongEntity
-import com.musicplayer.database.musicPlaying.QueueDao
+import com.musicplayer.database.musicPlaying.QueueWriteDao
 import com.musicplayer.database.musicPlaying.QueueEntity
 import com.musicplayer.database.musicPlaying.SongEntity as mpSongEntity
+import com.musicplayer.database.musicPlaying.QueueReadDao
 
 @Database(
     entities =
@@ -23,8 +24,9 @@ import com.musicplayer.database.musicPlaying.SongEntity as mpSongEntity
 )
 @TypeConverters(Converters::class)
 abstract class MusicPlayerDatabase : RoomDatabase() {
-    abstract fun queueDao(): QueueDao
     abstract fun playlistDao(): PlaylistDao
     abstract fun songDao(): SongDao
     abstract fun playlistReadDao(): PlaylistReadDao
+    abstract fun queueWriteDao(): QueueWriteDao
+    abstract fun queueReadDao(): QueueReadDao
 }

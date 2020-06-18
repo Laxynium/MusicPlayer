@@ -1,23 +1,105 @@
 package com.musicplayer.musicPlaying.ui
 
+import android.content.ContentResolver
+import android.content.Context
+import android.net.Uri
+import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.musicplayer.R
 import com.musicplayer.framework.messaging.MessageBus
 import com.musicplayer.framework.ui.ObservableViewModel
-import com.musicplayer.musicManagement.models.Playlist
-import com.musicplayer.musicManagement.regularPlaylist.GetAllPlaylists
+import com.musicplayer.musicPlaying.domain.commands.player.PauseSong
+import com.musicplayer.musicPlaying.domain.commands.player.PlaySong
+import com.musicplayer.musicPlaying.domain.commands.player.SeekToSecond
+import com.musicplayer.musicPlaying.domain.commands.queue.EnqueueSong
+import com.musicplayer.musicPlaying.domain.commands.queue.GoToNextSong
+import com.musicplayer.musicPlaying.domain.commands.queue.GoToPreviousSong
+import com.musicplayer.musicPlaying.domain.commands.queue.GoToSong
+import com.musicplayer.musicPlaying.queries.GetPlayingStatus
+import com.musicplayer.musicPlaying.queries.GetSongProgress
+import com.musicplayer.musicPlaying.queries.GetSongsInQueue
+import com.musicplayer.musicPlaying.queries.SongDto
 import kotlinx.coroutines.launch
+import java.util.*
 
-class MusicPlayingViewModel(private val messageBus: MessageBus): ObservableViewModel() {
-//    private lateinit var playlists: List<Playlist>
-//
-//    init {
-//        viewModelScope.launch {
-//            playlists = messageBus.dispatch(GetAllPlaylists())
-//
-//        }
-//    }
+class MusicPlayingViewModel(private val messageBus: MessageBus,private val context: Context): ObservableViewModel() {
+    private lateinit var songsInQueue: LiveData<List<SongDto>>
+    private lateinit var onSongsChangedHandler: (List<SongDto>)->Unit
 
-    fun play(){
+    @Bindable
+    val songProgress = MutableLiveData<Int>()
+
+    @Bindable
+    val playing = MutableLiveData<String>().apply {
+        value = "Play"
+    }
+
+    init {
+            viewModelScope.launch {
+                    val resourceIds = listOf(R.raw.sample_1, R.raw.sample_2, R.raw.sample_3)
+                    resourceIds.forEach { resourceId->
+                        val resources = context.resources
+                        val uri = Uri.Builder()
+                            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                            .authority((resources.getResourcePackageName(resourceId)))
+                            .appendPath((resources.getResourceTypeName(resourceId)))
+                            .appendPath((resources.getResourceEntryName(resourceId)))
+                            .build()
+                    messageBus.dispatch(EnqueueSong(UUID.randomUUID(), uri.toString()))
+                }
+
+                songsInQueue = messageBus.dispatch(GetSongsInQueue())
+                songsInQueue.observeForever {
+                    onSongsChangedHandler.invoke(it)
+                }
+            }
+            viewModelScope.launch {
+                messageBus.dispatch(GetSongProgress()).observeForever {
+                    songProgress.postValue(it)
+                }
+            }
+            viewModelScope.launch {
+                messageBus.dispatch(GetPlayingStatus()).observeForever {
+                    val value = if (it.isPlaying) "Pause" else "Play"
+                    playing.postValue(value)
+                }
+            }
+    }
+    fun onSongsChange(`fun`:(List<SongDto>)->Unit){
+        onSongsChangedHandler = `fun`
+    }
+    fun toggle(){
+        if(playing.value != "Play"){
+            pause()
+        }else{
+            play()
+        }
+    }
+    private fun play() = viewModelScope.launch{
+        messageBus.dispatch(PlaySong())
+    }
+
+    private fun pause() = viewModelScope.launch{
+        messageBus.dispatch(PauseSong())
+    }
+
+    fun next() = viewModelScope.launch {
+        messageBus.dispatch(GoToNextSong())
+    }
+
+    fun prev() = viewModelScope.launch {
+        messageBus.dispatch(GoToPreviousSong())
+    }
+
+    fun goTo(songDto: SongDto) = viewModelScope.launch {
+        messageBus.dispatch(GoToSong(songDto.position))
+    }
+
+    fun seekTo(progress:Int){
+        viewModelScope.launch {
+            messageBus.dispatch(SeekToSecond(progress))
+        }
     }
 }

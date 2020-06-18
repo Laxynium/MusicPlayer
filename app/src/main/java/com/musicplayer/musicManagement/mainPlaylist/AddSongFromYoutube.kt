@@ -1,9 +1,11 @@
 package com.musicplayer.musicManagement.mainPlaylist
 
+import arrow.core.Either
 import com.musicplayer.framework.messaging.Command
 import com.musicplayer.framework.messaging.CommandHandler
 import com.musicplayer.musicManagement.models.Song
 import com.musicplayer.musicManagement.repositories.PlaylistRepository
+import com.musicplayer.framework.messaging.Error
 import java.util.*
 
 data class AddSongFromYoutube(
@@ -16,13 +18,15 @@ data class AddSongFromYoutube(
 
 class AddSongFromYoutubeHandler(private val playlistRepository: PlaylistRepository) :
     CommandHandler<AddSongFromYoutube> {
-    override suspend fun handle(command: AddSongFromYoutube) {
+    override suspend fun handle(command: AddSongFromYoutube): Either<Error, Unit> {
         val location = null
 //        TODO("^^^ save song into sth")
         var playlist = playlistRepository.getMain()
         var song = Song(command.songId, command.ytId, command.title, command.artist, command.thumbnailUrl, location)
         playlist.songs = playlist.songs.plus(song)
         playlistRepository.save(playlist)
+
+        return Right(Unit)
 
     }
 }

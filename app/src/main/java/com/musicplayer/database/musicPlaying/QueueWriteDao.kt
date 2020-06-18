@@ -3,7 +3,7 @@ package com.musicplayer.database.musicPlaying
 import androidx.room.*
 
 @Dao
-interface QueueDao{
+interface QueueWriteDao{
 
     @Transaction
     @Query("SELECT * FROM queue limit 1")

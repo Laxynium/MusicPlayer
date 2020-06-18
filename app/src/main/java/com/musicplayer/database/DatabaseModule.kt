@@ -5,6 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.musicplayer.database.musicManagement.*
 import com.musicplayer.database.musicPlaying.QueueDao
+import com.musicplayer.database.musicPlaying.QueueReadDao
+import com.musicplayer.database.musicPlaying.QueueWriteDao
 import com.musicplayer.database.musicPlaying.RoomQueueRepository
 import com.musicplayer.musicManagement.repositories.PlaylistRepository
 import com.musicplayer.musicManagement.repositories.SongRepository
@@ -28,7 +30,8 @@ object DatabaseModule {
                 })
                 .build()
         }
-        single { get<MusicPlayerDatabase>().queueDao() } bind QueueDao::class
+        single { get<MusicPlayerDatabase>().queueWriteDao() } bind QueueWriteDao::class
+        single { get<MusicPlayerDatabase>().queueReadDao() } bind QueueReadDao::class
         single { RoomQueueRepository(get()) } bind QueueRepository::class
         single { PlaylistDatabaseRepository(get(), get()) } bind PlaylistRepository::class
         single { SongDatabaseRepository(get()) } bind SongRepository::class
