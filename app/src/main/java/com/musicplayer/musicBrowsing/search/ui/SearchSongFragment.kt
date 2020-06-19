@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.musicplayer.databinding.FragmentSearchSongBinding
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class SearchSongFragment : Fragment() {
-    private val viewModel:SearchSongViewModel by viewModel()
+    private val viewModel:SearchSongViewModel by sharedViewModel()
     private lateinit var adapter: SearchSongAdapter
     private lateinit var binding: FragmentSearchSongBinding
 
