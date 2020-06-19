@@ -25,8 +25,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class MusicPlayingViewModel(private val messageBus: MessageBus,private val context: Context): ObservableViewModel() {
-    private lateinit var songsInQueue: LiveData<List<SongDto>>
-    private lateinit var onSongsChangedHandler: (List<SongDto>)->Unit
+    private var songsInQueue: MutableLiveData<List<SongDto>> = MutableLiveData()
 
     @Bindable
     val songProgress = MutableLiveData<Int>()
@@ -38,6 +37,12 @@ class MusicPlayingViewModel(private val messageBus: MessageBus,private val conte
 
     init {
             viewModelScope.launch {
+                messageBus.dispatch(GetSongsInQueue())
+                    .observeForever {
+                        songsInQueue.postValue(it)
+                    }
+            }
+            viewModelScope.launch {
                     val resourceIds = listOf(R.raw.sample_1, R.raw.sample_2, R.raw.sample_3)
                     resourceIds.forEach { resourceId->
                         val resources = context.resources
@@ -48,11 +53,6 @@ class MusicPlayingViewModel(private val messageBus: MessageBus,private val conte
                             .appendPath((resources.getResourceEntryName(resourceId)))
                             .build()
                     messageBus.dispatch(EnqueueSong(UUID.randomUUID(), uri.toString()))
-                }
-
-                songsInQueue = messageBus.dispatch(GetSongsInQueue())
-                songsInQueue.observeForever {
-                    onSongsChangedHandler.invoke(it)
                 }
             }
             viewModelScope.launch {
@@ -67,8 +67,8 @@ class MusicPlayingViewModel(private val messageBus: MessageBus,private val conte
                 }
             }
     }
-    fun onSongsChange(`fun`:(List<SongDto>)->Unit){
-        onSongsChangedHandler = `fun`
+    fun songsObservable():LiveData<List<SongDto>>{
+        return songsInQueue
     }
     fun toggle(){
         if(playing.value != "Play"){
