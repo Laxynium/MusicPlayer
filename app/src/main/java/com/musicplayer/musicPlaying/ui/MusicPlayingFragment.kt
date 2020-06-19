@@ -9,11 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.musicplayer.R
 import com.musicplayer.databinding.FragmentMusicPlayingBinding
-import kotlinx.android.synthetic.main.fragment_music_playing.view.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class MusicPlayingFragment : Fragment() {
-    private val viewModel: MusicPlayingViewModel by viewModel()
+    private val viewModel: MusicPlayingViewModel by sharedViewModel()
     private lateinit var adapter: QueueSongAdapter
     private lateinit var binding: FragmentMusicPlayingBinding
     override fun onCreateView(
@@ -40,7 +39,7 @@ class MusicPlayingFragment : Fragment() {
         binding.queueSongs.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-        viewModel.onSongsChange {
+        viewModel.songsObservable().observeForever {
             adapter.submitList(it)
         }
         val progressBar = view?.findViewById<SeekBar>(R.id.progressBar)
