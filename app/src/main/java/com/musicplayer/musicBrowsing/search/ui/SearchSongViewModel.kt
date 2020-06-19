@@ -7,6 +7,7 @@ import com.musicplayer.framework.messaging.MessageBus
 import com.musicplayer.framework.ui.ObservableViewModel
 import com.musicplayer.musicBrowsing.search.domain.SearchSong
 import com.musicplayer.musicBrowsing.search.domain.SongDto
+import com.musicplayer.musicManagement.mainPlaylist.AddSongFromYoutube
 import kotlinx.coroutines.launch
 
 
@@ -25,5 +26,9 @@ class SearchSongViewModel(private val messageBus: MessageBus): ObservableViewMod
             )
         )
         songs.postValue(result.toList())
+    }
+
+    fun downloadSong(song:SongDto) = viewModelScope.launch {
+        messageBus.dispatch(AddSongFromYoutube(song.youtubeId, song.title, "empty", song.thumbnailUrl))
     }
 }

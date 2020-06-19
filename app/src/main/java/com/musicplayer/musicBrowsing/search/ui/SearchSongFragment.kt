@@ -37,15 +37,8 @@ class SearchSongFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
-//        adapter.submitList(listOf(SongRecord("rec1", 1.0, "das", "dasd", "dasda"),
-//            SongRecord("rec2", 1.1, "dasdasda", "dasasd", "da123sda")))
-
         viewModel.songs.observeForever {
             adapter.submitList(it)
         }
-
-//        viewModel.onSongsChange {
-//            adapter.submitList(it)
-//        }
     }
 }

@@ -9,6 +9,7 @@ import com.musicplayer.database.musicPlaying.QueueWriteDao
 import com.musicplayer.database.musicPlaying.QueueEntity
 import com.musicplayer.database.musicPlaying.SongEntity as mpSongEntity
 import com.musicplayer.database.musicPlaying.QueueReadDao
+import com.musicplayer.database.musicPlaying.QueueSongView
 
 @Database(
     entities =
@@ -18,6 +19,9 @@ import com.musicplayer.database.musicPlaying.QueueReadDao
         PlaylistEntity::class,
         mmSongEntity::class,
         PlaylistSongCrossRef::class
+    ],
+    views = [
+        QueueSongView::class
     ],
     version = 1,
     exportSchema = false

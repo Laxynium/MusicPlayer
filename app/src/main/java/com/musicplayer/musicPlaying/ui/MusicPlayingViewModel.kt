@@ -7,9 +7,11 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import arrow.core.extensions.list.foldable.forAll
 import com.musicplayer.R
 import com.musicplayer.framework.messaging.MessageBus
 import com.musicplayer.framework.ui.ObservableViewModel
+import com.musicplayer.musicManagement.regularPlaylist.GetAllSongsFromPlaylist
 import com.musicplayer.musicPlaying.domain.commands.player.PauseSong
 import com.musicplayer.musicPlaying.domain.commands.player.PlaySong
 import com.musicplayer.musicPlaying.domain.commands.player.SeekToSecond
@@ -21,7 +23,9 @@ import com.musicplayer.musicPlaying.queries.GetPlayingStatus
 import com.musicplayer.musicPlaying.queries.GetSongProgress
 import com.musicplayer.musicPlaying.queries.GetSongsInQueue
 import com.musicplayer.musicPlaying.queries.SongDto
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class MusicPlayingViewModel(private val messageBus: MessageBus,private val context: Context): ObservableViewModel() {
@@ -43,17 +47,16 @@ class MusicPlayingViewModel(private val messageBus: MessageBus,private val conte
                     }
             }
             viewModelScope.launch {
-                    val resourceIds = listOf(R.raw.sample_1, R.raw.sample_2, R.raw.sample_3)
-                    resourceIds.forEach { resourceId->
-                        val resources = context.resources
-                        val uri = Uri.Builder()
-                            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-                            .authority((resources.getResourcePackageName(resourceId)))
-                            .appendPath((resources.getResourceTypeName(resourceId)))
-                            .appendPath((resources.getResourceEntryName(resourceId)))
-                            .build()
-                    messageBus.dispatch(EnqueueSong(UUID.randomUUID(), uri.toString()))
-                }
+                //Some problem with location. It is null
+//                messageBus.dispatch(GetAllSongsFromPlaylist(UUID.fromString("00000000-0000-0000-0000-000000000001"))).observeForever {
+//                    viewModelScope.launch {
+//                        withContext(Dispatchers.IO){
+//                            it.forEach {
+//                                messageBus.dispatch(EnqueueSong(it.songId, it.location?:"test"))
+//                            }
+//                        }
+//                    }
+//                }
             }
             viewModelScope.launch {
                 messageBus.dispatch(GetSongProgress()).observeForever {
