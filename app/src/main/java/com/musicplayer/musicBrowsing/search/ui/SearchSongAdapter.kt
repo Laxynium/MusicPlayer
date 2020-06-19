@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.DiffUtil
 import com.musicplayer.R
 import com.musicplayer.databinding.SearchSongBinding
 import com.musicplayer.framework.ui.DataBoundListAdapter
-import com.musicplayer.musicBrowsing.domain.SongRecord
+import com.musicplayer.musicBrowsing.search.domain.SongDto
 
 class SearchSongAdapter(
     private val viewModel: SearchSongViewModel
-): DataBoundListAdapter<SongRecord>(
-    diffCallback = object: DiffUtil.ItemCallback<SongRecord>() {
-        override fun areItemsTheSame(oldItem: SongRecord, newItem: SongRecord): Boolean {
+): DataBoundListAdapter<SongDto>(
+    diffCallback = object: DiffUtil.ItemCallback<SongDto>() {
+        override fun areItemsTheSame(oldItem: SongDto, newItem: SongDto): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: SongRecord, newItem: SongRecord): Boolean {
+        override fun areContentsTheSame(oldItem: SongDto, newItem: SongDto): Boolean {
             return oldItem == newItem
         }
     }
@@ -32,7 +32,7 @@ class SearchSongAdapter(
         )
     }
 
-    override fun bind(binding: ViewDataBinding, item: SongRecord) {
+    override fun bind(binding: ViewDataBinding, item: SongDto) {
         when(binding){
             is SearchSongBinding ->{
                 binding.searchSong = item

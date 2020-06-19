@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.musicplayer.databinding.FragmentSearchSongBinding
-import com.musicplayer.musicBrowsing.domain.SongRecord
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchSongFragment : Fragment() {
@@ -41,7 +40,7 @@ class SearchSongFragment : Fragment() {
 //        adapter.submitList(listOf(SongRecord("rec1", 1.0, "das", "dasd", "dasda"),
 //            SongRecord("rec2", 1.1, "dasdasda", "dasasd", "da123sda")))
 
-        viewModel.records.observeForever {
+        viewModel.songs.observeForever {
             adapter.submitList(it)
         }
 

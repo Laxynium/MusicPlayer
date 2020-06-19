@@ -3,7 +3,7 @@
     <data>
         <variable
             name="searchSong"
-            type="com.musicplayer.musicBrowsing.domain.SongRecord" />
+            type="com.musicplayer.musicBrowsing.search.domain.SongDto" />
         <variable
             name="viewModel"
             type="com.musicplayer.musicBrowsing.search.ui.SearchSongViewModel" />
