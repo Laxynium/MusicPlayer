@@ -1,5 +1,6 @@
 package com.musicplayer.musicBrowsing.search.domain
 
+import com.beust.klaxon.*
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.github.kittinunf.fuel.coroutines.awaitObjectResponseResult
 import com.github.kittinunf.fuel.httpGet
@@ -7,6 +8,7 @@ import com.musicplayer.framework.messaging.Query
 import com.musicplayer.framework.messaging.QueryHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.StringBuilder
 
 data class SongDto(val youtubeId:String, val title:String, val thumbnailUrl:String)
 
@@ -17,13 +19,33 @@ class SearchSongQueryHandler: QueryHandler<SearchSong, Collection<SongDto>> {
     object SongDtoDeserializer : ResponseDeserializable<Collection<SongDto>> {
         override fun deserialize(content: String):Collection<SongDto> {
             //TODO Here deserialize the response body. Use soap, to extract proper fields from json
-            return listOf(
-                SongDto(
-                    "FWDXwrgdm9w",
-                    "Kwiat Jabłoni - \"Dziś późno pójdę spać\"",
-                    "abc"
-                )
-            )
+
+            val jsonObj = Parser.default().parse(StringBuilder(content)) as JsonArray<JsonObject>
+            var result = jsonObj[1]["response"] as JsonObject
+            result = result["contents"] as JsonObject
+            result = result["twoColumnSearchResultsRenderer"] as JsonObject
+            result = result["primaryContents"] as JsonObject
+            result = result["sectionListRenderer"] as JsonObject
+            var arr = result["contents"] as JsonArray<JsonObject>
+            result = arr[0]["itemSectionRenderer"] as JsonObject
+            arr = result["contents"] as JsonArray<JsonObject>
+
+            val videoObjects = arr.filter { it.containsKey("videoRenderer") }
+
+            return videoObjects.map { it ->
+                val videoObj = it["videoRenderer"] as JsonObject
+                val videoId = videoObj["videoId"] as String
+
+                val videoTitleObj = videoObj["title"] as JsonObject
+                val videoTitleArr = videoTitleObj["runs"] as JsonArray<JsonObject>
+                val videoTitle = videoTitleArr[0]["text"] as String
+
+                val videoThumbnailObj = videoObj["thumbnail"] as JsonObject
+                val videoThumbnailArr = videoThumbnailObj["thumbnails"] as JsonArray<JsonObject>
+                val videoThumbnail = videoThumbnailArr[0]["url"] as String
+
+                SongDto(videoId, videoTitle, videoThumbnail)
+            }
         }
     }
 
@@ -44,7 +66,7 @@ class SearchSongQueryHandler: QueryHandler<SearchSong, Collection<SongDto>> {
         var returnValue: Collection<SongDto> = listOf()
         result.fold(
             { data ->
-                println(data)
+//                println(data)
                 returnValue = data
             },
             { error ->
