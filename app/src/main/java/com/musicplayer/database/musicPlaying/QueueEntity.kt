@@ -3,9 +3,9 @@ package com.musicplayer.database.musicPlaying
 import androidx.room.*
 import java.util.*
 
-@Entity(tableName = "queue_songs")
+@Entity(tableName = "queue_songs", primaryKeys = ["id","position"])
 data class SongEntity(
-    @PrimaryKey val id: UUID,
+    val id: UUID,
     val queueId:Int,
     val location: String,
     val position:Int
@@ -14,7 +14,7 @@ data class SongEntity(
 @Entity(tableName = "queue")
 data class QueueEntity(
     @PrimaryKey var id: Int,
-    @ColumnInfo(name = "current_song_index")val currentSongIndex: Int
+    @ColumnInfo(name = "current_song_index") val currentSongIndex: Int
 )
 
 data class QueueWithSongsEntity(

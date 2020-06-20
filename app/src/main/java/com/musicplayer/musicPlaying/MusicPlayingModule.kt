@@ -16,6 +16,7 @@ import org.koin.dsl.module
 object MusicPlayingModule {
     val koinModule = module {
         viewModel { MusicPlayingViewModel(get(),get()) }
+        single { EnqueuePlaylistHandler(get()) } bind CommandHandler::class
         single { EnqueueSongHandler(get()) } bind CommandHandler::class
         single { EnqueueSongAsNextHandler(get()) } bind CommandHandler::class
         single { GoToNextSongHandler(get(), get()) } bind CommandHandler::class

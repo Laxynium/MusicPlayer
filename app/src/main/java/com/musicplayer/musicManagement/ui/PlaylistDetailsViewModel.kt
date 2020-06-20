@@ -10,9 +10,7 @@ import com.musicplayer.musicManagement.models.Song
 import com.musicplayer.musicManagement.regularPlaylist.GetAllSongsFromPlaylist
 import com.musicplayer.musicManagement.regularPlaylist.GetAllSongsFromPlaylistNotLiveData
 import com.musicplayer.musicManagement.regularPlaylist.RemoveSongFromRegularPlaylist
-import com.musicplayer.musicPlaying.domain.commands.queue.EnqueueSong
-import com.musicplayer.musicPlaying.domain.commands.queue.EnqueueSongAsNext
-import com.musicplayer.musicPlaying.domain.commands.queue.GoToNextSong
+import com.musicplayer.musicPlaying.domain.commands.queue.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -43,12 +41,10 @@ class PlaylistDetailsViewModel(private val messageBus: MessageBus) : ObservableV
 
     fun enqueueWholePlaylist() {
         viewModelScope.launch(Dispatchers.IO) {
-            var activeSongs =
-                messageBus.dispatch(GetAllSongsFromPlaylistNotLiveData(playlist.playlistId))
-            activeSongs.forEach {
-                //should first remove all from queue
-                messageBus.dispatch(EnqueueSong(it.songId, it.location.toString()))
-            }
+            val activeSongs = messageBus.dispatch(GetAllSongsFromPlaylistNotLiveData(playlist.playlistId))
+
+            messageBus.dispatch(EnqueuePlaylist(activeSongs.map { PlaylistSongDto(it.songId, it.location!!) }))
+
             parentFragment.moveToPlayingView()
         }
     }

@@ -5,6 +5,7 @@ import com.musicplayer.framework.messaging.QueryHandler
 import com.musicplayer.musicManagement.mainPlaylist.AddSongFromYoutubeHandler
 import com.musicplayer.musicManagement.mainPlaylist.RemoveSongFromMainPlaylistHandler
 import com.musicplayer.musicManagement.mainPlaylist.services.ScriptIdEncoder
+import com.musicplayer.musicManagement.mainPlaylist.services.SongsFileManager
 import com.musicplayer.musicManagement.mainPlaylist.services.YoutubeService
 import com.musicplayer.musicManagement.mainPlaylist.services.YtMp3DownloadLinkGenerator
 import com.musicplayer.musicManagement.regularPlaylist.*
@@ -35,5 +36,6 @@ object MusicManagementModule {
         single {YoutubeService(get())}
         single {YtMp3DownloadLinkGenerator(get())}
         single { ScriptIdEncoder() }
+        single { SongsFileManager(get()) }
     }
 }
