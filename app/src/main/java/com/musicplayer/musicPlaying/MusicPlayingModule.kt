@@ -4,7 +4,6 @@ import com.musicplayer.framework.messaging.CommandHandler
 import com.musicplayer.framework.messaging.QueryHandler
 import com.musicplayer.musicPlaying.domain.commands.player.*
 import com.musicplayer.musicPlaying.domain.commands.queue.*
-import com.musicplayer.musicPlaying.queries.GetPlayingStatus
 import com.musicplayer.musicPlaying.queries.GetPlayingStatusHandler
 import com.musicplayer.musicPlaying.queries.GetSongProgressHandler
 import com.musicplayer.musicPlaying.queries.GetSongsInQueueHandler
@@ -16,12 +15,13 @@ import org.koin.dsl.module
 object MusicPlayingModule {
     val koinModule = module {
         viewModel { MusicPlayingViewModel(get(),get()) }
-        single { EnqueuePlaylistHandler(get()) } bind CommandHandler::class
+        single { EnqueuePlaylistHandler(get(),get()) } bind CommandHandler::class
         single { EnqueueSongHandler(get()) } bind CommandHandler::class
         single { EnqueueSongAsNextHandler(get()) } bind CommandHandler::class
         single { GoToNextSongHandler(get(), get()) } bind CommandHandler::class
         single { GoToPreviousSongHandler(get(),get()) } bind CommandHandler::class
         single { GoToSongHandler(get(),get()) } bind CommandHandler::class
+        single { RemoveSongFromQueueHandler(get(),get()) } bind CommandHandler::class
 
         single { PlaySongHandler(get(), get()) } bind CommandHandler::class
         single { PauseSongHandler(get(),get()) } bind CommandHandler::class

@@ -19,8 +19,13 @@ class DevicePlayer(private val context: Context) : IDevicePlayer {
     private val isPlaying = MutableLiveData<Boolean>()
     private val currentPosition: LiveData<Int> = liveData(Dispatchers.IO) {
         while (true){
-            if(!mediaPlayer.isPlaying)
+            if(!mediaPlayer.isPlaying){
+                if(!isPrepared){
+                    emit(0)
+                }
                 continue
+            }
+
 
             try {
                 val value =
@@ -51,17 +56,21 @@ class DevicePlayer(private val context: Context) : IDevicePlayer {
 
     override suspend fun changeSong(songLocation: String) =
         suspendCoroutine<Unit> { cont->
-            val wasPlaying = mediaPlayer.isPlaying
-            reset()
-            mediaPlayer.setDataSource(context, Uri.parse(songLocation))
-            mediaPlayer.setOnPreparedListener {
-                mediaPlayer.seekTo(0)
-                isPrepared = true
-                cont.resume(Unit)
-                if(wasPlaying)
-                    play()
+            try{
+                val wasPlaying = mediaPlayer.isPlaying
+                reset()
+                mediaPlayer.setDataSource(context, Uri.parse(songLocation))
+                mediaPlayer.setOnPreparedListener {
+                    mediaPlayer.seekTo(0)
+                    isPrepared = true
+                    cont.resume(Unit)
+                    if(wasPlaying)
+                        play()
+                }
+                mediaPlayer.prepareAsync()
+            }catch (exception:Exception){
+                println(exception)
             }
-            mediaPlayer.prepareAsync()
         }
 
     override fun play(){
@@ -88,8 +97,19 @@ class DevicePlayer(private val context: Context) : IDevicePlayer {
         mediaPlayer.seekTo(newProgress)
     }
 
-    private fun reset(){
+    override suspend fun handleSongRemoval(nextSongLocation: String?){
+        if(nextSongLocation != null){
+            changeSong(nextSongLocation)
+        }else{
+            pause()
+            reset()
+        }
+    }
+
+
+    override fun reset(){
         isPrepared = false
+        isPlaying.postValue(false)
         mediaPlayer.reset()
     }
 }

@@ -25,7 +25,6 @@ class YoutubeService(private val downloadLinkGenerator: YtMp3DownloadLinkGenerat
             .appendHeader("User-Agent", "curl/7.55.1")
            .awaitByteArrayResponseResult()
 
-
         return result.fold({ data ->
              Right(SongDownload(ytId, outputStream.toByteArray().toList()))
         },{ error ->

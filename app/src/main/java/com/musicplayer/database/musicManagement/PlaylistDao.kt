@@ -1,7 +1,6 @@
 package com.musicplayer.database.musicManagement
 
 import androidx.room.*
-import com.musicplayer.database.musicPlaying.QueueWithSongsEntity
 import java.util.*
 
 @Dao

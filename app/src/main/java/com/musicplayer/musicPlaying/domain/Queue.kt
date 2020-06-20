@@ -2,6 +2,11 @@ package com.musicplayer.musicPlaying.domain
 
 import arrow.core.Either
 import arrow.core.Option
+import java.util.*
+
+typealias CurrentSongRemoved = Boolean
+typealias LastSongRemoved = Boolean
+typealias RemovalResult = Pair<CurrentSongRemoved, LastSongRemoved>
 
 class Queue() {
     private var currentSongIndex = 0
@@ -27,7 +32,11 @@ class Queue() {
     }
 
     fun enqueueAsNext(song:Song) {
-        songs.add(currentSongIndex + 1, song)
+        if(songs.isEmpty()){
+            enqueue(song)
+        } else {
+            songs.add(currentSongIndex + 1, song)
+        }
     }
 
     fun goToNext() {
@@ -50,5 +59,31 @@ class Queue() {
         this.songs.clear()
         this.songs.addAll(songs)
         this.currentSongIndex = 0
+    }
+
+
+    fun removeSong(songId: UUID, position: Int?):RemovalResult {
+        val songsToRemove = songs.filterIndexed { i, s ->
+            s.id == songId && (position == null ||  i == position)
+        }
+        val currentSongRemoved = songsToRemove
+            .mapIndexed { i, song -> Pair(i,song) }
+            .any { it.first == currentSongIndex }
+
+        val indexFix = songsToRemove.filterIndexed{ i, _ -> i < currentSongIndex}.count()
+
+        songs.removeAll(songsToRemove)
+
+        currentSongIndex -= indexFix
+        val lastSongRemoved = songs.size == 0
+        if(currentSongRemoved){
+            if(!lastSongRemoved){
+                currentSongIndex  %= songs.size
+            }else{
+                currentSongIndex = 0
+            }
+        }
+
+        return RemovalResult(currentSongRemoved, lastSongRemoved)
     }
 }

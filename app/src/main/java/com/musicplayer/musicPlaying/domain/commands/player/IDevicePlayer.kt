@@ -11,4 +11,6 @@ interface IDevicePlayer {
     fun play()
     fun pause()
     fun seekTo(progressInPercentage: Int)
+    suspend fun handleSongRemoval(nextSongLocation: String?)
+    fun reset()
 }
