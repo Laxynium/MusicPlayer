@@ -30,7 +30,7 @@ open class Song {
         this.title = title
         this.artist = artist
         this.thumbnailUrl = thumbnailUrl
-        if(location.isNullOrEmpty()) this.location = location
+        if(!location.isNullOrEmpty()) this.location = location
     }
 
     fun toEntity(): SongEntity {
