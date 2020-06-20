@@ -4,8 +4,8 @@ import arrow.core.Either
 import arrow.core.Right
 import com.musicplayer.framework.messaging.Command
 import com.musicplayer.framework.messaging.CommandHandler
-import com.musicplayer.musicManagement.repositories.PlaylistRepository
 import com.musicplayer.framework.messaging.Error
+import com.musicplayer.musicManagement.repositories.PlaylistRepository
 import java.util.*
 
 data class RenameRegularPlaylist(
