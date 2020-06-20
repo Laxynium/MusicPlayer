@@ -25,6 +25,4 @@ class AddPlaylistViewModel(private val messageBus: MessageBus) : ObservableViewM
         }
         parentFragment.moveBack()
     }
-
-
 }

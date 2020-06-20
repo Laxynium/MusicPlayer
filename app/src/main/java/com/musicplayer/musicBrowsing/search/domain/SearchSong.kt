@@ -21,7 +21,12 @@ class SearchSongQueryHandler: QueryHandler<SearchSong, Collection<SongDto>> {
                 SongDto(
                     "FWDXwrgdm9w",
                     "Kwiat Jabłoni - \"Dziś późno pójdę spać\"",
-                    "abc"
+                    "https://i.ytimg.com/vi/FWDXwrgdm9w/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLB8nvfotO14rGfNZmOQllvfJsNBsw"
+                ),
+                SongDto(
+                    "dqVZaN4lnwQ",
+                    "C-BooL - Never Go Away (Official Video)",
+                    "https://i.ytimg.com/vi/dqVZaN4lnwQ/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&amp;rs=AOn4CLBS2s-Azj__k3sfxK49NnNzx3EHfg"
                 )
             )
         }
