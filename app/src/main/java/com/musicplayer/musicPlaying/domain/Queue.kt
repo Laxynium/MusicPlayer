@@ -63,16 +63,15 @@ class Queue() {
 
 
     fun removeSong(songId: UUID, position: Int?):RemovalResult {
-        val songsToRemove = songs.filterIndexed { i, s ->
-            s.id == songId && (position == null ||  i == position)
+        val songsToRemove = songs.mapIndexed { i, song -> Pair(i,song) }.filter { p ->
+            p.second.id == songId && (position == null ||  p.first == position)
         }
         val currentSongRemoved = songsToRemove
-            .mapIndexed { i, song -> Pair(i,song) }
             .any { it.first == currentSongIndex }
 
-        val indexFix = songsToRemove.filterIndexed{ i, _ -> i < currentSongIndex}.count()
+        val indexFix = songsToRemove.filter{ p -> p.first < currentSongIndex}.count()
 
-        songs.removeAll(songsToRemove)
+        songs.removeAll(songsToRemove.map { it.second })
 
         currentSongIndex -= indexFix
         val lastSongRemoved = songs.size == 0

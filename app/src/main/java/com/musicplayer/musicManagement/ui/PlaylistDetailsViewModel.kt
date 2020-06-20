@@ -52,7 +52,6 @@ class PlaylistDetailsViewModel(private val messageBus: MessageBus) : ObservableV
     fun goTo(song: Song) {
         viewModelScope.launch {
             messageBus.dispatch(EnqueueSongAsNext(song.songId, song.location.toString()))
-            parentFragment.moveToPlayingView()
         }
     }
 

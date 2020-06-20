@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
+
 class SongsFileManager(private val context: Context){
     suspend fun save(title: String, data:ByteArray): Uri? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
@@ -19,11 +20,21 @@ class SongsFileManager(private val context: Context){
     }
 
     suspend fun delete(uri:Uri) = withContext(Dispatchers.IO){
-        uri.path.let{
-            return@let File(it!!)
-        }.let {
-            if(it.exists()){
-                it.delete()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            context.contentResolver.delete(uri,null,null)
+        }else{
+            val file = File(uri.path)
+            file.delete()
+            if (file.exists()) {
+                file.canonicalFile.delete()
+                if (file.exists()) {
+                    context.applicationContext
+                        .deleteFile(file.name)
+                }else{
+
+                }
+            }else{
+
             }
         }
     }

@@ -1,21 +1,14 @@
 package com.musicplayer.musicPlaying.ui
 
-import android.content.ContentResolver
-import android.content.Context
-import android.net.Uri
 import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import arrow.core.extensions.list.foldable.forAll
-import com.musicplayer.R
 import com.musicplayer.framework.messaging.MessageBus
 import com.musicplayer.framework.ui.ObservableViewModel
-import com.musicplayer.musicManagement.regularPlaylist.GetAllSongsFromPlaylist
 import com.musicplayer.musicPlaying.domain.commands.player.PauseSong
 import com.musicplayer.musicPlaying.domain.commands.player.PlaySong
 import com.musicplayer.musicPlaying.domain.commands.player.SeekToSecond
-import com.musicplayer.musicPlaying.domain.commands.queue.EnqueueSong
 import com.musicplayer.musicPlaying.domain.commands.queue.GoToNextSong
 import com.musicplayer.musicPlaying.domain.commands.queue.GoToPreviousSong
 import com.musicplayer.musicPlaying.domain.commands.queue.GoToSong
@@ -23,12 +16,9 @@ import com.musicplayer.musicPlaying.queries.GetPlayingStatus
 import com.musicplayer.musicPlaying.queries.GetSongProgress
 import com.musicplayer.musicPlaying.queries.GetSongsInQueue
 import com.musicplayer.musicPlaying.queries.SongDto
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.*
 
-class MusicPlayingViewModel(private val messageBus: MessageBus,private val context: Context): ObservableViewModel() {
+class MusicPlayingViewModel(private val messageBus: MessageBus): ObservableViewModel() {
     private var songsInQueue: MutableLiveData<List<SongDto>> = MutableLiveData()
 
     @Bindable
@@ -46,18 +36,7 @@ class MusicPlayingViewModel(private val messageBus: MessageBus,private val conte
                         songsInQueue.postValue(it)
                     }
             }
-            viewModelScope.launch {
-                //Some problem with location. It is null
-//                messageBus.dispatch(GetAllSongsFromPlaylist(UUID.fromString("00000000-0000-0000-0000-000000000001"))).observeForever {
-//                    viewModelScope.launch {
-//                        withContext(Dispatchers.IO){
-//                            it.forEach {
-//                                messageBus.dispatch(EnqueueSong(it.songId, it.location?:"test"))
-//                            }
-//                        }
-//                    }
-//                }
-            }
+
             viewModelScope.launch {
                 messageBus.dispatch(GetSongProgress()).observeForever {
                     songProgress.postValue(it)
