@@ -13,10 +13,14 @@ data class RemoveSongFromMainPlaylist(
     val songId: UUID
 ) : Command
 
-class RemoveSongFromMainPlaylistHandler(private val playlistDao: PlaylistDao, private val songDao: SongDao) :
-    CommandHandler<RemoveSongFromMainPlaylist> {
+class RemoveSongFromMainPlaylistHandler(
+    private val playlistDao: PlaylistDao,
+    private val songDao: SongDao
+)
+    : CommandHandler<RemoveSongFromMainPlaylist> {
     override suspend fun handle(command: RemoveSongFromMainPlaylist): Either<Error, Unit> {
         playlistDao.deleteSong(songDao.get(command.songId))
+
         return Right(Unit)
 //        TODO("Should also remove from memory")
     }

@@ -7,7 +7,6 @@ import com.github.kittinunf.fuel.coroutines.awaitByteArrayResponseResult
 import com.github.kittinunf.fuel.httpDownload
 import com.musicplayer.framework.messaging.Error
 import java.io.ByteArrayOutputStream
-import java.io.InputStream
 
 data class SongDownload(val ytId: String, val data:List<Byte>)
 class YoutubeService(private val downloadLinkGenerator: YtMp3DownloadLinkGenerator){

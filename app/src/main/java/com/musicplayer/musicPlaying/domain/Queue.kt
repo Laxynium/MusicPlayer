@@ -45,4 +45,10 @@ class Queue() {
         currentSongIndex = songPosition
         return Either.right(Unit)
     }
+
+    fun enqueuePlaylist(songs: List<Song>) {
+        this.songs.clear()
+        this.songs.addAll(songs)
+        this.currentSongIndex = 0
+    }
 }
