@@ -52,7 +52,6 @@ class PlaylistDetailsViewModel(private val messageBus: MessageBus) : ObservableV
     fun goTo(song: Song) {
         viewModelScope.launch {
             messageBus.dispatch(EnqueueSongAsNext(song.songId, song.location.toString()))
-            messageBus.dispatch(GoToNextSong())
             parentFragment.moveToPlayingView()
         }
     }
@@ -60,7 +59,7 @@ class PlaylistDetailsViewModel(private val messageBus: MessageBus) : ObservableV
     fun remove(song: Song) {
         viewModelScope.launch {
             if (playlist.playlistId.equals(UUID.fromString("00000000-0000-0000-0000-000000000001"))) {
-                messageBus.dispatch(RemoveSongFromMainPlaylist(song.songId))
+                messageBus.dispatch(RemoveSongFromMainPlaylist(song.songId, song.location))
             } else {
                 messageBus.dispatch(RemoveSongFromRegularPlaylist(playlist.playlistId, song.songId))
             }
