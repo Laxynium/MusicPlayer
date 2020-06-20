@@ -30,6 +30,7 @@ object MusicManagementModule {
         single { GetAllPlaylistsHandler(get()) } bind QueryHandler::class
         single { GetPlaylistByIdHandler(get()) } bind QueryHandler::class
         single { GetAllSongsFromPlaylistHandler(get()) } bind QueryHandler::class
+        single { GetAllSongsFromPlaylistNotLiveDataHandler(get()) } bind QueryHandler::class
 
         single {YoutubeService(get())}
         single {YtMp3DownloadLinkGenerator(get())}

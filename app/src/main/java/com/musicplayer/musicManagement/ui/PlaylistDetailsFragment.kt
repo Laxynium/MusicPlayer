@@ -12,6 +12,7 @@ import com.musicplayer.databinding.FragmentPlaylistDetailsBinding
 import com.musicplayer.musicManagement.models.Playlist
 import com.musicplayer.musicManagement.ui.adapters.PlaylistAdapter
 import com.musicplayer.musicManagement.ui.adapters.SongsAdapter
+import com.musicplayer.musicPlaying.ui.MusicPlayingFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class PlaylistDetailsFragment : Fragment() {
@@ -56,6 +57,11 @@ class PlaylistDetailsFragment : Fragment() {
 
     fun moveBack() {
         var fragment = MusicManagementFragment()
+        parentFragmentManager.beginTransaction().replace(id, fragment).commit()
+    }
+
+    fun moveToPlayingView() {
+        var fragment = MusicPlayingFragment()
         parentFragmentManager.beginTransaction().replace(id, fragment).commit()
     }
 }
