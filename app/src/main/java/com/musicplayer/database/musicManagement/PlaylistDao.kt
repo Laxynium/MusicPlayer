@@ -42,7 +42,7 @@ interface PlaylistDao {
     fun removeRef(playlistId: UUID, songId: UUID)
 
     @Transaction
-    @Query("INSERT INTO PlaylistSongCrossRef (playlistId, songId) Values (:playlistId, :songId)")
+    @Query("INSERT OR IGNORE INTO PlaylistSongCrossRef (playlistId, songId) Values (:playlistId, :songId)")
     fun addRef(playlistId: UUID, songId: UUID)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
