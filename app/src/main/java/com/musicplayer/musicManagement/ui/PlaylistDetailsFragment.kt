@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.musicplayer.databinding.FragmentMusicManagementBinding
-import com.musicplayer.databinding.FragmentMusicPlayingBindingImpl
 import com.musicplayer.databinding.FragmentPlaylistDetailsBinding
 import com.musicplayer.musicManagement.models.Playlist
-import com.musicplayer.musicManagement.ui.adapters.PlaylistAdapter
+import com.musicplayer.musicManagement.models.Song
 import com.musicplayer.musicManagement.ui.adapters.SongsAdapter
 import com.musicplayer.musicPlaying.ui.MusicPlayingFragment
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -46,7 +44,7 @@ class PlaylistDetailsFragment : Fragment() {
         binding.songsRecyclerview.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-        viewModel.onSongsChanged{
+        viewModel.onSongsChanged {
             adapter.submitList(it)
         }
     }
@@ -63,5 +61,12 @@ class PlaylistDetailsFragment : Fragment() {
     fun moveToPlayingView() {
         var fragment = MusicPlayingFragment()
         parentFragmentManager.beginTransaction().replace(id, fragment).commit()
+    }
+
+    fun moveToSongContextMenu(song: Song, playlist: Playlist) {
+        var fragment = SongContextFragment()
+        parentFragmentManager.beginTransaction().replace(id, fragment).commit()
+        fragment.setPlaylist(playlist)
+        fragment.setupViewModel(song)
     }
 }

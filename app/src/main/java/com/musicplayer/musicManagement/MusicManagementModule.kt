@@ -12,6 +12,7 @@ import com.musicplayer.musicManagement.regularPlaylist.*
 import com.musicplayer.musicManagement.ui.AddPlaylistViewModel
 import com.musicplayer.musicManagement.ui.MusicManagementViewModel
 import com.musicplayer.musicManagement.ui.PlaylistDetailsViewModel
+import com.musicplayer.musicManagement.ui.SongContextViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -20,6 +21,7 @@ object MusicManagementModule {
     val koinModule = module {
         viewModel { MusicManagementViewModel(get()) }
         viewModel { PlaylistDetailsViewModel(get()) }
+        viewModel { SongContextViewModel(get()) }
         viewModel { AddPlaylistViewModel(get()) }
         single { AddSongFromYoutubeHandler(get(), get(), get()) } bind CommandHandler::class
         single { AddSongToRegularPlaylistHandler(get()) } bind CommandHandler::class
@@ -29,6 +31,7 @@ object MusicManagementModule {
         single { RemoveSongFromRegularPlaylistHandler(get()) } bind CommandHandler::class
         single { RenameRegularPlaylistHandler(get()) } bind CommandHandler::class
         single { GetAllPlaylistsHandler(get()) } bind QueryHandler::class
+        single { GetAllRegularPlaylistsHandler(get()) } bind QueryHandler::class
         single { GetPlaylistByIdHandler(get()) } bind QueryHandler::class
         single { GetAllSongsFromPlaylistHandler(get()) } bind QueryHandler::class
         single { GetAllSongsFromPlaylistNotLiveDataHandler(get()) } bind QueryHandler::class
