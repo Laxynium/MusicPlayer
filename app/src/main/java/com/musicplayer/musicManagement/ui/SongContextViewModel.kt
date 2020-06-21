@@ -41,11 +41,9 @@ class SongContextViewModel(private val messageBus: MessageBus) : ObservableViewM
         }
     }
 
-    fun playNow(view: View) {
+    fun playAsNext(view: View) {
         viewModelScope.launch {
             messageBus.dispatch(EnqueueSongAsNext(song.songId, song.location.toString()))
-            messageBus.dispatch(GoToNextSong())
-            messageBus.dispatch(PlaySong())
         }
         parentFragment.moveToPlaying()
     }

@@ -22,6 +22,11 @@
             android:layout_weight="1"
             android:text="@{queueSong.title}"
             android:onClick="@{()->viewModel.goTo(queueSong)}"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove"
+            android:onClick="@{()->viewModel.remove(queueSong)}"/>
 
     </LinearLayout>
 </layout>

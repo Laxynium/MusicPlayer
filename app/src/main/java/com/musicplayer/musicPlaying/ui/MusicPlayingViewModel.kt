@@ -12,6 +12,7 @@ import com.musicplayer.musicPlaying.domain.commands.player.SeekToSecond
 import com.musicplayer.musicPlaying.domain.commands.queue.GoToNextSong
 import com.musicplayer.musicPlaying.domain.commands.queue.GoToPreviousSong
 import com.musicplayer.musicPlaying.domain.commands.queue.GoToSong
+import com.musicplayer.musicPlaying.domain.commands.queue.RemoveSongFromQueue
 import com.musicplayer.musicPlaying.queries.GetPlayingStatus
 import com.musicplayer.musicPlaying.queries.GetSongProgress
 import com.musicplayer.musicPlaying.queries.GetSongsInQueue
@@ -42,6 +43,7 @@ class MusicPlayingViewModel(private val messageBus: MessageBus): ObservableViewM
                     songProgress.postValue(it)
                 }
             }
+
             viewModelScope.launch {
                 messageBus.dispatch(GetPlayingStatus()).observeForever {
                     val value = if (it.isPlaying) "Pause" else "Play"
@@ -49,9 +51,11 @@ class MusicPlayingViewModel(private val messageBus: MessageBus): ObservableViewM
                 }
             }
     }
+
     fun songsObservable():LiveData<List<SongDto>>{
         return songsInQueue
     }
+
     fun toggle(){
         if(playing.value != "Play"){
             pause()
@@ -59,11 +63,12 @@ class MusicPlayingViewModel(private val messageBus: MessageBus): ObservableViewM
             play()
         }
     }
-    private fun play() = viewModelScope.launch{
+
+    private fun play() = viewModelScope.launch {
         messageBus.dispatch(PlaySong())
     }
 
-    private fun pause() = viewModelScope.launch{
+    private fun pause() = viewModelScope.launch {
         messageBus.dispatch(PauseSong())
     }
 
@@ -79,9 +84,13 @@ class MusicPlayingViewModel(private val messageBus: MessageBus): ObservableViewM
         messageBus.dispatch(GoToSong(songDto.position))
     }
 
-    fun seekTo(progress:Int){
+    fun seekTo(progress:Int) {
         viewModelScope.launch {
             messageBus.dispatch(SeekToSecond(progress))
         }
+    }
+
+    fun remove(songDto: SongDto)=viewModelScope.launch {
+        messageBus.dispatch(RemoveSongFromQueue(songDto.songId, songDto.position))
     }
 }
