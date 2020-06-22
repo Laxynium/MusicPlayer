@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_music_management" />
 
     <fragment
+        android:id="@+id/navigation_playlistDetails"
+        android:name="com.musicplayer.musicManagement.ui.PlaylistDetailsFragment"
+        android:label="@string/title_playlistDetails"
+        tools:layout="@layout/fragment_playlist_details" />
+
+    <fragment
         android:id="@+id/navigation_musicPlaying"
         android:name="com.musicplayer.musicPlaying.ui.MusicPlayingFragment"
         android:label="@string/title_musicPlaying"

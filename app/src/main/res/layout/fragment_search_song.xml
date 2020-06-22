@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
@@ -8,12 +8,9 @@
             type="com.musicplayer.musicBrowsing.search.ui.SearchSongViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".musicBrowsing.ui.SearchSongFragment">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".musicBrowsing.ui.SearchSongFragment">
 
     <EditText
         android:id="@+id/search_text"
@@ -37,5 +34,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_text" />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchSongs"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scrollbars="vertical"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button"
+            tools:listitem="@layout/search_song" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

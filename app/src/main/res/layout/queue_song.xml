@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="queueSong"
+            type="com.musicplayer.musicPlaying.queries.SongDto" />
+        <variable
+            name="viewModel"
+            type="com.musicplayer.musicPlaying.ui.MusicPlayingViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="16dp"
+        android:background="@{queueSong.current ? @color/cardview_dark_background : @color/cardview_light_background}">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{queueSong.title}"
+            android:onClick="@{()->viewModel.goTo(queueSong)}"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove"
+            android:onClick="@{()->viewModel.remove(queueSong)}"/>
+
+    </LinearLayout>
+</layout>

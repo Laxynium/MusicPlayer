@@ -3,7 +3,7 @@ package com.musicplayer.database.musicPlaying
 import androidx.room.*
 
 @Dao
-interface QueueDao{
+interface QueueWriteDao{
 
     @Transaction
     @Query("SELECT * FROM queue limit 1")
@@ -18,12 +18,13 @@ interface QueueDao{
     @Delete
     fun deleteSong(songEntity: SongEntity)
 
+    @Query("DELETE FROM queue_songs")
+    fun deleteAllUsers()
+
     @Transaction
     fun save(queue: QueueWithSongsEntity){
         updateQueue(queue.queue)
-        queue.songs.forEach {
-            deleteSong(it)
-        }
+        deleteAllUsers()
         queue.songs.forEach {
             insertSong(it)
         }
