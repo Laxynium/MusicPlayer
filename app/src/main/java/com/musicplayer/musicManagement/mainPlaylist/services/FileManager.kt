@@ -14,9 +14,9 @@ import java.io.File
 class SongsFileManager(private val context: Context){
     suspend fun save(title: String, data:ByteArray): Uri? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-            saveFileQ(title, data)
+            saveFileQ(normalize(title), data)
         else
-            saveFileLegacy(title, data)
+            saveFileLegacy(normalize(title), data)
     }
 
     suspend fun delete(uri:Uri) = withContext(Dispatchers.IO){
@@ -37,6 +37,10 @@ class SongsFileManager(private val context: Context){
 
             }
         }
+    }
+
+    private fun normalize(title:String):String{
+        return title.toLowerCase().replace(" ","_").replace(":","_");
     }
 
     private suspend fun saveFileQ(

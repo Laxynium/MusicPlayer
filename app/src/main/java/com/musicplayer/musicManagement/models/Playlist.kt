@@ -2,7 +2,6 @@ package com.musicplayer.musicManagement.models
 
 import com.musicplayer.database.musicManagement.PlaylistEntity
 import com.musicplayer.database.musicManagement.PlaylistWithSongsEntity
-import com.musicplayer.musicManagement.models.Song
 import java.util.*
 
 open class Playlist {

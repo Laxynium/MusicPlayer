@@ -13,8 +13,6 @@ open class Song {
     val thumbnailUrl: String
     var location: String? = null
 
-
-
     constructor(entity: SongEntity) {
         songId = entity.songId
         ytId = entity.ytId

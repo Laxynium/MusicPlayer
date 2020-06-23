@@ -25,8 +25,7 @@ class DevicePlayer(private val context: Context) : IDevicePlayer {
                 }
                 continue
             }
-
-
+            
             try {
                 val value =
                     (mediaPlayer.currentPosition.toDouble() / mediaPlayer.duration * 100).toInt()
